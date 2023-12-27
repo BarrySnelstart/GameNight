@@ -3,19 +3,16 @@ package nl.novi.gamenight.Model.Game;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
 
+import java.util.Date;
 
-@Getter
-@Setter
-@Entity(name = "expantions")
-public class Expantion {
-
+@Entity (name = "game_expansion")
+public class GameExpansion {
     @Id
     @GeneratedValue
     private int id;
-    private String expantionName;
+    private String expansionName;
+    private Date releaseDate;
 
 
 }

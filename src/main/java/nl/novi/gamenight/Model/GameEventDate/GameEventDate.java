@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Model.GameDate;
+package nl.novi.gamenight.Model.GameEventDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class GameDate {
+public class GameEventDate {
     @Id
     @GeneratedValue
     int id;
