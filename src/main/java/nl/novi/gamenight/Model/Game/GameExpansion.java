@@ -1,18 +1,19 @@
 package nl.novi.gamenight.Model.Game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import nl.novi.gamenight.Model.Game.Game;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity (name = "game_expansion")
 public class GameExpansion {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String expansionName;
     private Date releaseDate;
 
-
+    @ManyToOne
+    Game game;
 }

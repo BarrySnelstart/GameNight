@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 public class Review {
     @Id
     @GeneratedValue
-    int id;
+    long id;
     String review;
     int startValue; // Min 1 max 5
 }

@@ -1,10 +1,10 @@
 package nl.novi.gamenight.Model.Game;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +13,8 @@ import lombok.Setter;
 public class Game {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
+
     private String name;
     private String manufacturer;
     private int minimumPlayers;
@@ -24,4 +25,7 @@ public class Game {
     private Category category;
     private Type type;
     private String averageStarValue;
+
+    @OneToMany(mappedBy = "game")
+    List<GameExpansion> gameExpansionList;
 }
