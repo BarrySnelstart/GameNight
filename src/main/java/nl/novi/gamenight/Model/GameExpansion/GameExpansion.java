@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Model.Game;
+package nl.novi.gamenight.Model.GameExpansion;
 
 import jakarta.persistence.*;
 import nl.novi.gamenight.Model.Game.Game;

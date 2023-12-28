@@ -1,7 +1,7 @@
 package nl.novi.gamenight.Dto.GameExpansion;
 
-import nl.novi.gamenight.Model.Game.Category;
-import nl.novi.gamenight.Model.Game.Type;
+import nl.novi.gamenight.Model.Category;
+import nl.novi.gamenight.Model.Type;
 
 public class GameExpansionInputDto {
     public String name;

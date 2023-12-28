@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Model.Game;
+package nl.novi.gamenight.Model;
 
 public enum Type {
     COOP,

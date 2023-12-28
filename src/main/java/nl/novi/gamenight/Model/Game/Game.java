@@ -3,6 +3,9 @@ package nl.novi.gamenight.Model.Game;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import nl.novi.gamenight.Model.Category;
+import nl.novi.gamenight.Model.GameExpansion.GameExpansion;
+import nl.novi.gamenight.Model.Type;
 
 import java.util.List;
 
