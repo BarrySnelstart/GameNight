@@ -1,7 +1,5 @@
 package nl.novi.gamenight.Dto.GameExpansion;
-
 import nl.novi.gamenight.Model.Category;
-import nl.novi.gamenight.Model.Type;
 
 public class GameExpansionInputDto {
     public String name;
@@ -12,6 +10,6 @@ public class GameExpansionInputDto {
     public int minimumDuration;
     public int averageDuration;
     public Category category;
-    public Type type;
+
     public String averageStarValue;
 }

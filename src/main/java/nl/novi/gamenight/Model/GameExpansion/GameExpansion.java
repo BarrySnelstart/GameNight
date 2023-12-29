@@ -11,7 +11,7 @@ public class GameExpansion {
     @Id
     @GeneratedValue
     private Long id;
-    private String expansionName;
+   // private String expansionName;
     private Date releaseDate;
 
     @ManyToOne

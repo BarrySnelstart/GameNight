@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.novi.gamenight.Model.Category;
 import nl.novi.gamenight.Model.GameExpansion.GameExpansion;
-import nl.novi.gamenight.Model.Type;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class Game {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long gameid;
 
     private String name;
     private String manufacturer;
@@ -26,9 +25,9 @@ public class Game {
     private int minimumDuration;
     private int averageDuration;
     private Category category;
-    private Type type;
+    private String type;
     private String averageStarValue;
-
+    private Long mainGameid;
     @OneToMany(mappedBy = "game")
     List<GameExpansion> gameExpansionList;
 }
