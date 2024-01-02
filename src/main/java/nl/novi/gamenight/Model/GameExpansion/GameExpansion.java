@@ -10,10 +10,7 @@ import java.util.List;
 public class GameExpansion {
     @Id
     @GeneratedValue
-    private Long id;
-   // private String expansionName;
-    private Date releaseDate;
-
+    private Long gameExpansionID;
     @ManyToOne
     Game game;
 }

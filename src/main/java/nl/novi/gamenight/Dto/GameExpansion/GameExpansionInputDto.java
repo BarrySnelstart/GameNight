@@ -10,6 +10,5 @@ public class GameExpansionInputDto {
     public int minimumDuration;
     public int averageDuration;
     public Category category;
-
     public String averageStarValue;
 }
