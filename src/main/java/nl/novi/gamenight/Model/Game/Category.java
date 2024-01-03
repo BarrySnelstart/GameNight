@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Model;
+package nl.novi.gamenight.Model.Game;
 
 public enum Category {
     BORD,
