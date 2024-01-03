@@ -14,5 +14,5 @@ public class GameOutputDto {
     public String type;
     public String averageStarValue;
 
-    public Long id;
+    public Long gameID;
 }
