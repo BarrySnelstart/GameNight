@@ -1,8 +1,9 @@
 package nl.novi.gamenight.Dto.Game;
 
-import nl.novi.gamenight.Model.Category;
+import nl.novi.gamenight.Model.Game.Category;
 
 public class GameOutputDto {
+    public Long gameID;
     public String name;
     public String manufacturer;
     public int minimumPlayers;
@@ -14,5 +15,4 @@ public class GameOutputDto {
     public String type;
     public String averageStarValue;
 
-    public Long gameID;
 }
