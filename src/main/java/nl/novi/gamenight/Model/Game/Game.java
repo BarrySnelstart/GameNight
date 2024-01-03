@@ -3,14 +3,10 @@ package nl.novi.gamenight.Model.Game;
 import jakarta.persistence.*;
 import lombok.*;
 import nl.novi.gamenight.Model.GameExpansion.GameExpansion;
-
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 
 @Entity (name = "games")
 public class Game {

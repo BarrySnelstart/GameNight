@@ -1,14 +1,14 @@
 package nl.novi.gamenight.Controller;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
-import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Services.GameService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.HTML;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("games")
@@ -20,9 +20,20 @@ private final GameService gameService;
     }
 
     @PostMapping
-    public ResponseEntity<Object> addGame (@RequestBody GameInputDto game) {
-    gameService.addGame(game);
-    return ResponseEntity.created(null).body(gameService.addGame(game));
+    public ResponseEntity<Object> addGame (@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            Map <String, String> errors = new HashMap <>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        }
+        else
+        {
+            gameService.addGame(game);
+            return ResponseEntity.created(null).body(gameService.addGame(game));
+        }
     }
 //    @GetMapping
 //    public ResponseEntity <List <Game>> getAllGames() {
