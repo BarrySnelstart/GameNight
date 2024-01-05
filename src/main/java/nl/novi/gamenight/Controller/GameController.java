@@ -1,5 +1,7 @@
 package nl.novi.gamenight.Controller;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
+import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Services.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -8,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,6 +21,11 @@ public class GameController {
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
+    @GetMapping
+    List <GameOutputDto> getAllGames () {
+        return gameService.getAllGames();
+    }
+
 
     @PostMapping
     public ResponseEntity <Object> addGame(@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
