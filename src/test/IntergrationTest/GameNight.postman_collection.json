@@ -60,14 +60,35 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/game/2",
+							"raw": "localhost:8080/games/game/-1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"games",
 								"game",
-								"2"
+								"-1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Game By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games/game/-2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games",
+								"game",
+								"-2"
 							]
 						}
 					},

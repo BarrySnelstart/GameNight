@@ -33,6 +33,11 @@ public class GameService {
         var game = gameRepository.getReferenceById(id);
         return fromEntityToGameOutputDto(game);
     }
+
+    public void deleteGameByID (Long id){
+    gameRepository.deleteById(id);
+    }
+
     public Game fromGameInputDtoToEntity (GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);

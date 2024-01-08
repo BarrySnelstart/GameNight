@@ -1,4 +1,5 @@
 package nl.novi.gamenight.Controller;
+
 import jakarta.persistence.Id;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
@@ -21,16 +22,23 @@ public class GameController {
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
+
     @GetMapping
-    public List <GameOutputDto> getAllGames () {
+    public List <GameOutputDto> getAllGames() {
         return gameService.getAllGames();
     }
 
     @GetMapping("/game/{id}")
-    public ResponseEntity<GameOutputDto> getGameByID (@PathVariable("id") Long id){
+    public ResponseEntity <GameOutputDto> getGameByID(@PathVariable("id") Long id) {
         GameOutputDto game = gameService.getGameByID(id);
         return ResponseEntity.ok().body(game);
     }
+    @DeleteMapping("/game/{id}")
+    public ResponseEntity deleteGameByID(@PathVariable("id") Long id) {
+        gameService.deleteGameByID(id);
+        return ResponseEntity.ok("Deleted");
+    }
+
     @PostMapping
     public ResponseEntity <Object> addGame(@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
 
