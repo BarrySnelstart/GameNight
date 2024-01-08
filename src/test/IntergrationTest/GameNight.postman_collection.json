@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"name\": \"Catan\",\r\n     \"manufacturer\":  \"999 Games\",\r\n     \"minimumPlayers\": 2,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 60,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"spel\",\r\n      \"averageStarValue\":0\r\n      }",
+							"raw": "{\r\n     \"name\": \"Catan\",\r\n     \"manufacturer\":  \"999 games\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12 ,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 120,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"gezelschap\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,6 +53,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Game By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/game/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -66,7 +85,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"name\": \"Catan Return of the ridders\",\r\n     \"manufacturer\":  \"999 Games\",\r\n     \"minimumPlayers\": 2,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 60,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"Uitbreiding\",\r\n      \"averageStarValue\":0,\r\n      \"basegame\" : 1\r\n      }",
+							"raw": "{\r\n     \"name\": \"Catan Return of the ridders\",\r\n     \"manufacturer\":  \"999 Games\",\r\n     \"minimumPlayers\": 2,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 60,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"Uitbreiding\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
