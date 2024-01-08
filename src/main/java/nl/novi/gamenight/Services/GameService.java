@@ -29,7 +29,10 @@ public class GameService {
         }
         return  allGamesList;
     }
-
+    public GameOutputDto getGameByID (Long id){
+        var game = gameRepository.getReferenceById(id);
+        return fromEntityToGameOutputDto(game);
+    }
     public Game fromGameInputDtoToEntity (GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);
