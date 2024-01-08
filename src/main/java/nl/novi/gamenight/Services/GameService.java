@@ -6,6 +6,9 @@ import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Repository.GameRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class GameService {
     private final GameRepository gameRepository;
@@ -19,6 +22,13 @@ public class GameService {
         gameRepository.save(game);
         return fromEntityToGameOutputDto(game);
     }
+    public List <GameOutputDto> getAllGames (){
+        List<GameOutputDto> allGamesList = new ArrayList<>();
+        for (Game games: gameRepository.findAll()) {
+            allGamesList.add(fromEntityToGameOutputDto(games));
+        }
+        return  allGamesList;
+    }
 
     public Game fromGameInputDtoToEntity (GameInputDto gameInput) {
         var game = new Game();
@@ -29,7 +39,7 @@ public class GameService {
         game.setAge(gameInput.age);
         game.setMinimumDuration(gameInput.minimumDuration);
         game.setAverageDuration(gameInput.averageDuration);
-        game.setCategory(gameInput.category);
+        //game.setCategory(gameInput.category);
         game.setType(gameInput.type);
         return game;
     }

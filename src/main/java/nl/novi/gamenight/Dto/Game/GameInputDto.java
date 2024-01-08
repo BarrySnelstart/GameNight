@@ -1,13 +1,11 @@
 package nl.novi.gamenight.Dto.Game;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import nl.novi.gamenight.Model.Game.Category;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
+
 public class GameInputDto {
     @NotBlank (message = "Game name cannot be empty or null")
     public String name;
@@ -28,7 +26,6 @@ public class GameInputDto {
     public int averageDuration;
 
     // TO-DO Validation on Enum
-
     public Category category;
     @NotBlank (message = "Type cannot be empty or null")
     public String type;

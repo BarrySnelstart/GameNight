@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-
 @Entity (name = "games")
 public class Game {
     @Id
@@ -21,7 +20,10 @@ public class Game {
     private int age;
     private int minimumDuration;
     private int averageDuration;
+
+    @Enumerated(EnumType.STRING)
     private Category category;
+
     private String type;
     private String averageStarValue;
 
