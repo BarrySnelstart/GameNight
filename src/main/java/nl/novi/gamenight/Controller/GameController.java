@@ -1,7 +1,6 @@
 package nl.novi.gamenight.Controller;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
-import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Services.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -40,4 +39,6 @@ public class GameController {
             return ResponseEntity.created(null).body(gameService.addGame(game));
         }
     }
+
+
 }

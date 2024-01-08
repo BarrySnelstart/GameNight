@@ -39,7 +39,7 @@ public class GameService {
         game.setAge(gameInput.age);
         game.setMinimumDuration(gameInput.minimumDuration);
         game.setAverageDuration(gameInput.averageDuration);
-        game.setCategory(gameInput.category);
+        //game.setCategory(gameInput.category);
         game.setType(gameInput.type);
         return game;
     }
