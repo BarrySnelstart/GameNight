@@ -37,6 +37,34 @@
 					"response": []
 				},
 				{
+					"name": "Update GameBy ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\": \"Catan\",\r\n     \"manufacturer\":  \"999 games\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12 ,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 120,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"gezelschap\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/game/-3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"game",
+								"-3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Game List",
 					"request": {
 						"method": "GET",
