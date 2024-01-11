@@ -8,10 +8,11 @@ import nl.novi.gamenight.exceptions.IdNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GameService {
@@ -21,10 +22,19 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public GameOutputDto addGame(GameInputDto gameInput) {
-        Game game = fromGameInputDtoToEntity(gameInput);
-        gameRepository.save(game);
-        return fromEntityToGameOutputDto(game);
+    public ResponseEntity <Object> addGame(@Validated GameInputDto gameInput, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            Map <String, String> errors = new HashMap <>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            Game game = fromGameInputDtoToEntity(gameInput);
+            gameRepository.save(game);
+            return ResponseEntity.created(null).body(game);
+        }
     }
 
     public List <GameOutputDto> getAllGames() {
@@ -45,13 +55,11 @@ public class GameService {
         if (ifExist.isPresent()) {
             gameRepository.deleteById(id);
             return ResponseEntity.ok("Deleted");
-        }
-        else {
-              var karel = new IdNotFoundException("ID not found in database");
+        } else {
+            var karel = new IdNotFoundException("ID not found in database");
             return new ResponseEntity <>(karel.getMessage(), HttpStatus.BAD_REQUEST);
-             }
         }
-
+    }
 
 
     public Game fromGameInputDtoToEntity(GameInputDto gameInput) {
@@ -84,18 +92,27 @@ public class GameService {
         return gameOutputDto;
     }
 
-    public GameOutputDto updateGameByID(Long id, GameInputDto updatedGame) {
-        var gameToUpdate = gameRepository.getReferenceById(id);
-        gameToUpdate.setName(updatedGame.name);
-        gameToUpdate.setManufacturer(updatedGame.manufacturer);
-        gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
-        gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
-        gameToUpdate.setAge(updatedGame.age);
-        gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
-        gameToUpdate.setAverageDuration(updatedGame.averageDuration);
-        gameToUpdate.setCategory(updatedGame.category);
-        gameToUpdate.setType(updatedGame.type);
-        gameRepository.save(gameToUpdate);
-        return fromEntityToGameOutputDto(gameToUpdate);
+    public ResponseEntity updateGameByID(@Validated Long id, GameInputDto updatedGame, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            Map <String, String> errors = new HashMap <>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            var gameToUpdate = gameRepository.getReferenceById(id);
+            gameToUpdate.setName(updatedGame.name);
+            gameToUpdate.setManufacturer(updatedGame.manufacturer);
+            gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
+            gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
+            gameToUpdate.setAge(updatedGame.age);
+            gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
+            gameToUpdate.setAverageDuration(updatedGame.averageDuration);
+            gameToUpdate.setCategory(updatedGame.category);
+            gameToUpdate.setType(updatedGame.type);
+            gameRepository.save(gameToUpdate);
+            return  ResponseEntity.created(null).body(updatedGame);
+        }
     }
 }
