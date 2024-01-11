@@ -35,12 +35,11 @@ public class GameController {
     }
     @DeleteMapping("/game/{id}")
     public ResponseEntity deleteGameByID(@PathVariable("id") Long id) {
-        gameService.deleteGameByID(id);
-        return ResponseEntity.ok("Deleted");
+     return    gameService.deleteGameByID(id);
     }
 
     @PostMapping
-    public ResponseEntity <Object> addGame(@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
+    public ResponseEntity<Object> addGame(@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             Map <String, String> errors = new HashMap <>();
@@ -53,5 +52,19 @@ public class GameController {
         }
     }
 
+    @PutMapping("/game/{id}")
+    public  ResponseEntity<Object> updateGameByID (@PathVariable ("id") Long id,@Validated @RequestBody GameInputDto updatedGame,BindingResult bindingResult)
+    {
+        if (bindingResult.hasErrors()) {
+            Map <String, String> errors = new HashMap <>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(errors);
+        } else {
 
+            GameOutputDto game = gameService.updateGameByID(id, updatedGame);
+            return ResponseEntity.accepted().body(game);
+        }
+    }
 }

@@ -4,10 +4,14 @@ import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
 import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Repository.GameRepository;
+import nl.novi.gamenight.exceptions.IdNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GameService {
@@ -17,28 +21,40 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public GameOutputDto addGame (GameInputDto gameInput) {
+    public GameOutputDto addGame(GameInputDto gameInput) {
         Game game = fromGameInputDtoToEntity(gameInput);
         gameRepository.save(game);
         return fromEntityToGameOutputDto(game);
     }
-    public List <GameOutputDto> getAllGames (){
-        List<GameOutputDto> allGamesList = new ArrayList<>();
-        for (Game games: gameRepository.findAll()) {
+
+    public List <GameOutputDto> getAllGames() {
+        List <GameOutputDto> allGamesList = new ArrayList <>();
+        for (Game games : gameRepository.findAll()) {
             allGamesList.add(fromEntityToGameOutputDto(games));
         }
-        return  allGamesList;
+        return allGamesList;
     }
-    public GameOutputDto getGameByID (Long id){
+
+    public GameOutputDto getGameByID(Long id) {
         var game = gameRepository.getReferenceById(id);
         return fromEntityToGameOutputDto(game);
     }
 
-    public void deleteGameByID (Long id){
-    gameRepository.deleteById(id);
-    }
+    public ResponseEntity deleteGameByID(Long id) {
+        Optional <Game> ifExist = gameRepository.findById(id);
+        if (ifExist.isPresent()) {
+            gameRepository.deleteById(id);
+            return ResponseEntity.ok("Deleted");
+        }
+        else {
+              var karel = new IdNotFoundException("ID not found in database");
+            return new ResponseEntity <>(karel.getMessage(), HttpStatus.BAD_REQUEST);
+             }
+        }
 
-    public Game fromGameInputDtoToEntity (GameInputDto gameInput) {
+
+
+    public Game fromGameInputDtoToEntity(GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);
         game.setManufacturer(gameInput.manufacturer);
@@ -47,12 +63,12 @@ public class GameService {
         game.setAge(gameInput.age);
         game.setMinimumDuration(gameInput.minimumDuration);
         game.setAverageDuration(gameInput.averageDuration);
-        //game.setCategory(gameInput.category);
+        game.setCategory(gameInput.category);
         game.setType(gameInput.type);
         return game;
     }
 
-    public GameOutputDto fromEntityToGameOutputDto (Game game) {
+    public GameOutputDto fromEntityToGameOutputDto(Game game) {
         GameOutputDto gameOutputDto = new GameOutputDto();
         gameOutputDto.gameID = game.getGameID();
         gameOutputDto.name = game.getName();
@@ -68,4 +84,18 @@ public class GameService {
         return gameOutputDto;
     }
 
+    public GameOutputDto updateGameByID(Long id, GameInputDto updatedGame) {
+        var gameToUpdate = gameRepository.getReferenceById(id);
+        gameToUpdate.setName(updatedGame.name);
+        gameToUpdate.setManufacturer(updatedGame.manufacturer);
+        gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
+        gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
+        gameToUpdate.setAge(updatedGame.age);
+        gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
+        gameToUpdate.setAverageDuration(updatedGame.averageDuration);
+        gameToUpdate.setCategory(updatedGame.category);
+        gameToUpdate.setType(updatedGame.type);
+        gameRepository.save(gameToUpdate);
+        return fromEntityToGameOutputDto(gameToUpdate);
+    }
 }
