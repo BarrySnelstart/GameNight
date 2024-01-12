@@ -56,8 +56,7 @@ public class GameService {
             gameRepository.deleteById(id);
             return ResponseEntity.ok("Deleted");
         } else {
-            var karel = new IdNotFoundException("ID not found in database");
-            return new ResponseEntity <>(karel.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity <>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -93,26 +92,34 @@ public class GameService {
     }
 
     public ResponseEntity updateGameByID(@Validated Long id, GameInputDto updatedGame, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            Map <String, String> errors = new HashMap <>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
+        Optional <Game> ifExist = gameRepository.findById(id);
+        if (ifExist.isPresent()) {
+            if (bindingResult.hasErrors()) {
+                Map <String, String> errors = new HashMap <>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    errors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(errors);
+            } else {
+                var gameToUpdate = gameRepository.getReferenceById(id);
+                gameToUpdate.setName(updatedGame.name);
+                gameToUpdate.setManufacturer(updatedGame.manufacturer);
+                gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
+                gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
+                gameToUpdate.setAge(updatedGame.age);
+                gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
+                gameToUpdate.setAverageDuration(updatedGame.averageDuration);
+                gameToUpdate.setCategory(updatedGame.category);
+                gameToUpdate.setType(updatedGame.type);
+                gameRepository.save(gameToUpdate);
+                return ResponseEntity.created(null).body(updatedGame);
             }
-            return ResponseEntity.badRequest().body(errors);
         } else {
-            var gameToUpdate = gameRepository.getReferenceById(id);
-            gameToUpdate.setName(updatedGame.name);
-            gameToUpdate.setManufacturer(updatedGame.manufacturer);
-            gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
-            gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
-            gameToUpdate.setAge(updatedGame.age);
-            gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
-            gameToUpdate.setAverageDuration(updatedGame.averageDuration);
-            gameToUpdate.setCategory(updatedGame.category);
-            gameToUpdate.setType(updatedGame.type);
-            gameRepository.save(gameToUpdate);
-            return  ResponseEntity.created(null).body(updatedGame);
+            return new ResponseEntity <>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
+
     }
 }
+
+
+
