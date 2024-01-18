@@ -13,7 +13,7 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue
-    private long Id;
+    private long userID;
 
     private String userName;
     private String passWord;

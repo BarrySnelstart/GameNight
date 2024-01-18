@@ -5,8 +5,12 @@ import nl.novi.gamenight.Model.User.UserRole;
 
 public class UserOutputDto {
 
-    public Long id;
+    public Long userID;
     public String userName;
     public UserRole userRole;
+
+
+    /* TODO Delete password from outputDto when password is encoded*/
+    public String password;
 
 }
