@@ -23,6 +23,8 @@ public class GameController {
         this.gameService = gameService;
     }
 
+
+    /*TODO Check Return type for correct Status*/
     @GetMapping
     public List <GameOutputDto> getAllGames() {
         return gameService.getAllGames();

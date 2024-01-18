@@ -56,7 +56,7 @@ public class GameService {
             gameRepository.deleteById(id);
             return ResponseEntity.ok("Deleted");
         } else {
-            return new ResponseEntity <>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity <>(new IdNotFoundException("GameID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
