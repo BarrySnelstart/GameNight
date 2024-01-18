@@ -1,9 +1,9 @@
 package nl.novi.gamenight.Controller;
 
-import jakarta.persistence.Id;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
 import nl.novi.gamenight.Services.GameService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -30,41 +30,21 @@ public class GameController {
 
     @GetMapping("/game/{id}")
     public ResponseEntity <GameOutputDto> getGameByID(@PathVariable("id") Long id) {
-        GameOutputDto game = gameService.getGameByID(id);
-        return ResponseEntity.ok().body(game);
+        return ResponseEntity.ok().body(gameService.getGameByID(id));
     }
+
     @DeleteMapping("/game/{id}")
     public ResponseEntity deleteGameByID(@PathVariable("id") Long id) {
-     return    gameService.deleteGameByID(id);
+        return gameService.deleteGameByID(id);
     }
 
     @PostMapping
-    public ResponseEntity<Object> addGame(@Validated @RequestBody GameInputDto game, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            Map <String, String> errors = new HashMap <>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        } else {
-            return ResponseEntity.created(null).body(gameService.addGame(game));
-        }
+    public ResponseEntity <Object> addGame(@Validated @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
+        return gameService.addGame(gameInputDto, bindingResult);
     }
 
     @PutMapping("/game/{id}")
-    public  ResponseEntity<Object> updateGameByID (@PathVariable ("id") Long id,@Validated @RequestBody GameInputDto updatedGame,BindingResult bindingResult)
-    {
-        if (bindingResult.hasErrors()) {
-            Map <String, String> errors = new HashMap <>();
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        } else {
-
-            GameOutputDto game = gameService.updateGameByID(id, updatedGame);
-            return ResponseEntity.accepted().body(game);
-        }
+    public ResponseEntity <Object> updateGameByID(@PathVariable("id") Long id, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
+    return gameService.updateGameByID(id, updatedGame, bindingResult);
     }
 }
