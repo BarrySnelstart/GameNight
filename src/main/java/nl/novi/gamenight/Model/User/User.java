@@ -16,7 +16,11 @@ public class User {
     private long userID;
 
     private String userName;
+
+    /*TODO This should be encrypted */
     private String passWord;
+
+    /*TODO Wy whould a user be able to set UserRole ??*/
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 

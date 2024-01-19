@@ -23,10 +23,10 @@ public class UserService {
     }
 
 
-    public ResponseEntity <Object> addUser(@Validated UserInputDto userInput, BindingResult bindingResult) {
+    public ResponseEntity<Object> addUser(@Validated UserInputDto userInput, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            Map <String, String> errors = new HashMap <>();
+            Map<String, String> errors = new HashMap<>();
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
@@ -38,8 +38,8 @@ public class UserService {
         }
     }
 
-    public List <UserOutputDto> getAllUsers() {
-        List <UserOutputDto> allUsersList = new ArrayList <>();
+    public List<UserOutputDto> getAllUsers() {
+        List<UserOutputDto> allUsersList = new ArrayList<>();
         for (User user : userRepository.findAll()) {
             allUsersList.add(fromEntityToUserOutputDto(user));
         }
@@ -51,14 +51,40 @@ public class UserService {
         return fromEntityToUserOutputDto(user);
     }
 
+    public ResponseEntity updateUserNameByID(@Validated Long id, UserInputDto updatedUser, BindingResult bindingResult) {
+        Optional<User> ifExist = userRepository.findById(id);
+
+        if (ifExist.isPresent()) {
+            if (bindingResult.hasErrors()) {
+                Map<String, String> errors = new HashMap<>();
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    errors.put(error.getField(), error.getDefaultMessage());
+                }
+                return ResponseEntity.badRequest().body(errors);
+            } else {
+                var update = userRepository.getReferenceById(id);
+                User setUpdate = fromUserInputDtoToEntity(updatedUser);
+                setUpdate.setUserName(updatedUser.userName);
+                setUpdate.setUserRole(updatedUser.userRole);
+                setUpdate.setPassWord(updatedUser.passWord);
+                setUpdate.setUserID(update.getUserID());
+                userRepository.save(update);
+
+                return ResponseEntity.created(null).body(setUpdate);
+            }
+        } else {
+            return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
     public ResponseEntity deleteUserByID(Long id) {
-        Optional <User> ifExist = userRepository.findById(id);
+        Optional<User> ifExist = userRepository.findById(id);
         if (ifExist.isPresent()) {
             userRepository.deleteById(id);
             return ResponseEntity.ok("User Deleted");
         } else {
-            return new ResponseEntity <>(new IdNotFoundException("UserID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new IdNotFoundException("UserID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -81,25 +107,7 @@ public class UserService {
         return userOutputDto;
     }
 
-    public ResponseEntity updateUserameByID(@Validated Long id, UserInputDto updateduser, BindingResult bindingResult) {
-        Optional <User> ifExist = userRepository.findById(id);
-        if (ifExist.isPresent()) {
-            if (bindingResult.hasErrors()) {
-                Map <String, String> errors = new HashMap <>();
-                for (FieldError error : bindingResult.getFieldErrors()) {
-                    errors.put(error.getField(), error.getDefaultMessage());
-                }
-                return ResponseEntity.badRequest().body(errors);
-            } else {
-                userRepository.save(fromUserInputDtoToEntity(updateduser));
-                var userToUpdate = userRepository.getReferenceById(id);
-                return ResponseEntity.created(null).body(userToUpdate);
-            }
-        } else {
-            return new ResponseEntity <>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
-        }
 
-    }
 }
 
 
