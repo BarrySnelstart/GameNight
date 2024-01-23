@@ -11,5 +11,6 @@ public class UserInputDto {
     @NotBlank
     public String passWord;
 
+    /*TODO Wy whould a user be able to set UserRole ??*/
     public UserRole userRole;
 }
