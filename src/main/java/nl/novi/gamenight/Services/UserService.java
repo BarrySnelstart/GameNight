@@ -65,7 +65,6 @@ public class UserService {
                 var update = userRepository.getReferenceById(id);
                 User setUpdate = fromUserInputDtoToEntity(updatedUser);
                 setUpdate.setUserName(updatedUser.userName);
-                setUpdate.setUserRole(updatedUser.userRole);
                 setUpdate.setPassWord(updatedUser.passWord);
                 setUpdate.setUserID(update.getUserID());
                 userRepository.save(update);
@@ -92,7 +91,6 @@ public class UserService {
         var user = new User();
         user.setUserName(UserInput.userName);
         user.setPassWord(UserInput.passWord);
-        user.setUserRole(UserInput.userRole);
         return user;
     }
 
@@ -100,7 +98,6 @@ public class UserService {
         UserOutputDto userOutputDto = new UserOutputDto();
         userOutputDto.userID = user.getUserID();
         userOutputDto.userName = user.getUserName();
-        userOutputDto.userRole = user.getUserRole();
 
         /* TODO Delete password from outputDto when password is encoded*/
         userOutputDto.password = user.getPassWord();
