@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class User {
     /*TODO This should be encrypted */
     private String passWord;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles;
 
 }
