@@ -2,7 +2,6 @@ package nl.novi.gamenight.Model.Game;
 
 import jakarta.persistence.*;
 import lombok.*;
-import nl.novi.gamenight.Model.GameExpansion.GameExpansion;
 import java.util.List;
 
 @Getter
@@ -26,7 +25,4 @@ public class Game {
 
     private String type;
     private String averageStarValue;
-
-    @OneToMany(mappedBy = "game")
-    List<GameExpansion> gameExpansionList;
 }

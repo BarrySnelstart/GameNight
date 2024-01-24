@@ -12,3 +12,4 @@ VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gez
        (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
        (109, 'Illiterati', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP');
 
+insert into roles(user_role) values ('USER'), ('ADMIN');

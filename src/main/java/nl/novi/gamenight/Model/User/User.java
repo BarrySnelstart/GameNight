@@ -17,12 +17,11 @@ public class User {
     @GeneratedValue
     private long userID;
 
-    private String userName;
+    private String username;
 
     /*TODO This should be encrypted */
-    private String passWord;
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
-
 }

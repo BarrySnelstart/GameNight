@@ -12,8 +12,7 @@ import java.util.Collection;
 public class Role {
 
     @Id
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private String userRole;
 
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users;
