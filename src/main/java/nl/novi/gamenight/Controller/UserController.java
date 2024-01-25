@@ -28,7 +28,7 @@ public class UserController {
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
-
+/*TODO Move logica to ServiceLayer*/
     @PostMapping("/users")
     public String createUser(@RequestBody UserInputDto userDto) {
         User newUser = new User();
