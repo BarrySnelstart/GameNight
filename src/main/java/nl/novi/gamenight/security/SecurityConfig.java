@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                 .requestMatchers("/secret").hasAuthority("ADMIN")
                 //.requestMatchers("/**").hasAnyAuthority("USER", "ADMIN")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new nl.novi.gamenight.security.JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()

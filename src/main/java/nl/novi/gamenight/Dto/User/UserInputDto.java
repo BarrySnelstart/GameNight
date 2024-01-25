@@ -9,7 +9,4 @@ public class UserInputDto {
     public String username;
     @NotBlank
     public String password;
-    public String[] roles;
-    /*TODO Wy whould a user be able to set UserRole ??*/
-
 }
