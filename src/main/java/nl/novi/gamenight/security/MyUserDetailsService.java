@@ -11,16 +11,16 @@ import java.util.Optional;
 
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepos;
+    private final UserRepository userRepository;
 
-    public MyUserDetailsService(UserRepository repos) {
-        this.userRepos = repos;
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
     //@Override
-    public UserDetails loadUserByUsername(Long id) throws UsernameNotFoundException {
-        Optional<User> ou = userRepos.findById(id);
-        if (ou.isPresent()) {
-            User user = ou.get();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> checkUser = userRepository.findByUsername(username);
+        if (checkUser.isPresent()) {
+            User user = checkUser.get();
             return new MyUserDetails(user);
         }
         else {
@@ -28,8 +28,8 @@ public class MyUserDetailsService implements UserDetailsService {
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return null;
+//    }
 }

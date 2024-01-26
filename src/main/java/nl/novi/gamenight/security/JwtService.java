@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,10 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    /*TODO key in code ??*/
-    private final String SecretKey = "hatzeflatsWatdoetdithieriksnaphetniet";
+
+    @Value("${application.security.jwt.secret-key}")
+    private String SecretKey;
+
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SecretKey);
@@ -51,7 +54,7 @@ public class JwtService {
     }
     private String createToken(Map<String, Object> claims, String
             subject) {
-        long validPeriod = 1000 * 60 * 60 * 24 * 10; // 10 days in ms
+        long validPeriod = 1000 * 60 * 60 * 24;
         long currentTime = System.currentTimeMillis();
         return Jwts.builder()
                 .setClaims(claims)

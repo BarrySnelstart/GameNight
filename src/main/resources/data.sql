@@ -15,8 +15,11 @@ VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gez
 insert into roles(user_role) values ('USER'), ('ADMIN');
 
 insert into users(userid, username, password)
-VALUES  (101, 'user', '$2a$10$i6s5SvuBt6ALf9zCAmIRt.EzRwkxzLJ7dSL493a7xhuatTkinwb4C'),
-        (102, 'admin', '$2a$10$i6s5SvuBt6ALf9zCAmIRt.EzRwkxzLJ7dSL493a7xhuatTkinwb4C');
+-- TODO DELETE text based password
+-- DELETE! user = userwachtwoord
+-- DELETE! admin = adminwachtwoord
+VALUES  (101, 'user', '$2a$10$CMXKhEA.yLjrVICpqZfmNeSKQA.YAuGNau//Mnx.VylNf3C9y5V1m'),
+        (102, 'admin', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
 
 insert into users_roles(users_userid, roles_user_role)
 VALUES  (101, 'USER'),
