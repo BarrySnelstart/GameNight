@@ -7,6 +7,7 @@ import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -64,9 +65,8 @@ public class UserService {
             } else {
                 var update = userRepository.getReferenceById(id);
                 User setUpdate = fromUserInputDtoToEntity(updatedUser);
-                setUpdate.setUserName(updatedUser.userName);
-                setUpdate.setUserRole(updatedUser.userRole);
-                setUpdate.setPassWord(updatedUser.passWord);
+                setUpdate.setUsername(updatedUser.username);
+                setUpdate.setPassword(updatedUser.password);
                 setUpdate.setUserID(update.getUserID());
                 userRepository.save(update);
 
@@ -90,20 +90,15 @@ public class UserService {
 
     public User fromUserInputDtoToEntity(UserInputDto UserInput) {
         var user = new User();
-        user.setUserName(UserInput.userName);
-        user.setPassWord(UserInput.passWord);
-        user.setUserRole(UserInput.userRole);
+        user.setUsername(UserInput.username);
+        user.setPassword(UserInput.password);
         return user;
     }
 
     public UserOutputDto fromEntityToUserOutputDto(User user) {
         UserOutputDto userOutputDto = new UserOutputDto();
         userOutputDto.userID = user.getUserID();
-        userOutputDto.userName = user.getUserName();
-        userOutputDto.userRole = user.getUserRole();
-
-        /* TODO Delete password from outputDto when password is encoded*/
-        userOutputDto.password = user.getPassWord();
+        userOutputDto.username = user.getUsername();
         return userOutputDto;
     }
 

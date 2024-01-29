@@ -7,16 +7,36 @@
 	},
 	"item": [
 		{
-			"name": "game",
+			"name": "Get User Token",
 			"item": [
 				{
-					"name": "AddGame",
+					"name": "Get user JWT Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"pm.environment.set(\"UserToken\", headerValue);\r",
+									"pm.environment.set(\"AuthToken\", headerValue);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"name\": \"Catan\",\r\n     \"manufacturer\":  \"999 games\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12 ,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 120,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"gezelschap\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"user\",\r\n    \"password\" : \"userwachtwoord\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,11 +44,95 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/games",
+							"raw": "{{localBasedUrl}}/auth",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin JWT Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"pm.environment.set(\"AdminToken\", headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"adminwachtwoord\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/auth",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "game",
+			"item": [
+				{
+					"name": "AddGame",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\": \"Pong\",\r\n     \"manufacturer\":  \"Nitendo\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 2,\r\n     \"age\": 10 ,\r\n     \"minimumDuration\": 2,\r\n     \"averageDuration\": 10,\r\n     \"category\":\"OTHER\",\r\n     \"type\":\"Computer Game\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/games",
+							"host": [
+								"{{localBasedUrl}}"
+							],
 							"path": [
 								"games"
 							]
@@ -37,13 +141,13 @@
 					"response": []
 				},
 				{
-					"name": "Update GameBy ID",
+					"name": "Unhappy AddGame Validation",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"name\": \"Catan\",\r\n     \"manufacturer\":  \"999 games\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12 ,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 120,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"gezelschap\"\r\n}",
+							"raw": "{\r\n     \"name\": \"\",\r\n     \"manufacturer\":  \"\",\r\n     \"minimumPlayers\": 0,\r\n     \"maximumPlayers\": 0,\r\n     \"age\": 0 ,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 120,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"gezelschap\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -51,14 +155,12 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/game/-3",
+							"raw": "{{localBasedUrl}}/games",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
 							"path": [
-								"game",
-								"-3"
+								"games"
 							]
 						}
 					},
@@ -67,14 +169,23 @@
 				{
 					"name": "Get Game List",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userJwt}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/games",
+							"raw": "{{localBasedUrl}}/games",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
 							"path": [
 								"games"
 							]
@@ -88,15 +199,42 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/games/game/-1",
+							"raw": "{{localBasedUrl}}/games/game/1",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
 							"path": [
 								"games",
 								"game",
-								"-1"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update GameBy ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"name\": \"Ping Pong\",\r\n     \"manufacturer\":  \"Sony\",\r\n     \"minimumPlayers\": 1,\r\n     \"maximumPlayers\": 1,\r\n     \"age\": 1 ,\r\n     \"minimumDuration\": 1,\r\n     \"averageDuration\": 1,\r\n     \"category\":\"OTHER\",\r\n     \"type\":\"changed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/games/game/1",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"games",
+								"game",
+								"1"
 							]
 						}
 					},
@@ -108,33 +246,97 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/games/game/-2",
+							"raw": "{{localBasedUrl}}/games/game/1",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
 							"path": [
 								"games",
 								"game",
-								"-2"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UnHappy Delete By ID Exception",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedUrl}}//games/game/10",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"",
+								"games",
+								"game",
+								"10"
 							]
 						}
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{AuthToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
 		},
 		{
-			"name": "game expansion",
+			"name": "User",
 			"item": [
 				{
-					"name": "AddGame expansion",
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"pm.environment.set(\"AuthToken\", headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"name\": \"Catan Return of the ridders\",\r\n     \"manufacturer\":  \"999 Games\",\r\n     \"minimumPlayers\": 2,\r\n     \"maximumPlayers\": 4,\r\n     \"age\": 12,\r\n     \"minimumDuration\": 30,\r\n     \"averageDuration\": 60,\r\n     \"category\":\"BORD\",\r\n     \"type\":\"Uitbreiding\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"Henkie\",\r\n    \"password\" : \"geheim2024!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -142,13 +344,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/games",
+							"raw": "{{localBasedUrl}}/users/users",
 							"host": [
-								"localhost"
+								"{{localBasedUrl}}"
 							],
-							"port": "8080",
 							"path": [
-								"games"
+								"users",
+								"users"
 							]
 						}
 					},

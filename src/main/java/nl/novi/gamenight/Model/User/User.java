@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+
 
 @Getter
 @Setter
@@ -15,13 +17,10 @@ public class User {
     @GeneratedValue
     private long userID;
 
-    private String userName;
+    private String username;
 
-    /*TODO This should be encrypted */
-    private String passWord;
+    private String password;
 
-    /*TODO Wy whould a user be able to set UserRole ??*/
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles;
 }

@@ -44,8 +44,9 @@ public class GameService {
         }
         return allGamesList;
     }
-
+/*TODO Exception handler for id not found*/
     public GameOutputDto getGameByID(Long id) {
+
         var game = gameRepository.getReferenceById(id);
         return fromEntityToGameOutputDto(game);
     }
