@@ -2,6 +2,8 @@ package nl.novi.gamenight.Model.Game;
 
 import jakarta.persistence.*;
 import lombok.*;
+import nl.novi.gamenight.Model.review.Review;
+
 import java.util.List;
 
 @Getter
@@ -25,4 +27,7 @@ public class Game {
 
     private String type;
     private String averageStarValue;
+
+    @OneToMany(mappedBy = "games")
+    private List<Review> reviews;
 }
