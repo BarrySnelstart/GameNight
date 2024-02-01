@@ -1,7 +1,6 @@
 package nl.novi.gamenight.Controller;
 
 
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewInputDto;
 import nl.novi.gamenight.Services.ReviewService;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ public class ReviewController {
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
-    @PostMapping("/review/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<Object> addReview(@Validated @PathVariable ("id")Long id, @RequestBody ReviewInputDto reviewInputDto, BindingResult bindingResult) {
         return reviewService.addReview(reviewInputDto, bindingResult,id);
     }

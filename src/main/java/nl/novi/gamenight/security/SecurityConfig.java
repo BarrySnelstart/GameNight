@@ -49,14 +49,17 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/review/**").hasAuthority("USER")
                 .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/games/**").hasAuthority("USER")
                 .requestMatchers(HttpMethod.PUT, "/games/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/games/**").hasAuthority("ADMIN")
+
                 .requestMatchers("/secret").hasAuthority("ADMIN")
                 //.requestMatchers("/**").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().authenticated()
+                //.anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new nl.novi.gamenight.security.JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()

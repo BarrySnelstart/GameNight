@@ -17,8 +17,8 @@ public class Review {
 /*TODO Grote bepalen van de varschar*/
     @Column(columnDefinition="VARCHAR(12000)")
     String userReview;
-    int starRating;
 
+    private int starRating;
 
     @ManyToOne
     @JoinColumn(name = "userid")

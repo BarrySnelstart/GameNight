@@ -27,6 +27,10 @@ public class MyUserDetails implements UserDetails {
 
         return authorities;
     }
+
+    public Long getUserId() {
+        return user.getUserID();
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
