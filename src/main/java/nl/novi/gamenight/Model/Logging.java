@@ -7,7 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class Logging {
 
     String message;
 
-    Date logDate;
+    LocalDateTime logDate;
 
 
 }
