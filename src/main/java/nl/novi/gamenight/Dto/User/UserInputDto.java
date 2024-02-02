@@ -5,6 +5,8 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public class UserInputDto {
+
+    /*TODO Must be Unique*/
     @NotBlank
     public String username;
     @NotBlank

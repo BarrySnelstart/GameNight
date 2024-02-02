@@ -26,12 +26,12 @@ public class GameController {
 
     /*TODO Check Return type for correct Status*/
     @GetMapping
-    public List <GameOutputDto> getAllGames() {
+    public List<GameOutputDto> getAllGames() {
         return gameService.getAllGames();
     }
 
     @GetMapping("/game/{id}")
-    public ResponseEntity <GameOutputDto> getGameByID(@PathVariable("id") Long id) {
+    public ResponseEntity<GameOutputDto> getGameByID(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(gameService.getGameByID(id));
     }
 
@@ -41,12 +41,12 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity <Object> addGame(@Validated @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> addGame(@Validated @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
         return gameService.addGame(gameInputDto, bindingResult);
     }
 
     @PutMapping("/game/{id}")
-    public ResponseEntity <Object> updateGameByID(@PathVariable("id") Long id, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
-    return gameService.updateGameByID(id, updatedGame, bindingResult);
+    public ResponseEntity<Object> updateGameByID(@PathVariable("id") Long id, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
+        return gameService.updateGameByID(id, updatedGame, bindingResult);
     }
 }

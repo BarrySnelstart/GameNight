@@ -2,8 +2,8 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
-import nl.novi.gamenight.Model.Game.Expansion;
-import nl.novi.gamenight.Model.Game.Game;
+import nl.novi.gamenight.Model.Expansion;
+import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.ExpansionRepository;
 import nl.novi.gamenight.Repository.GameRepository;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,7 @@ import java.util.Map;
 public class ExpansionService {
     GameRepository gameRepository;
     ExpansionRepository expansionRepository;
+
     public ExpansionService(GameRepository gameRepository, ExpansionRepository expansionRepository) {
         this.gameRepository = gameRepository;
         this.expansionRepository = expansionRepository;

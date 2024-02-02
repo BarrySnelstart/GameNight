@@ -1,8 +1,8 @@
 package nl.novi.gamenight.Controller;
 
 import nl.novi.gamenight.Dto.User.UserInputDto;
-import nl.novi.gamenight.Model.User.Role;
-import nl.novi.gamenight.Model.User.User;
+import nl.novi.gamenight.Model.Role;
+import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.RoleRepository;
 import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.Services.UserService;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
@@ -28,7 +27,8 @@ public class UserController {
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
-/*TODO Move logica to ServiceLayer*/
+
+    /*TODO Move logica to ServiceLayer*/
     @PostMapping("/users")
     public String createUser(@RequestBody UserInputDto userDto) {
         User newUser = new User();
@@ -38,7 +38,9 @@ public class UserController {
         List<Role> userRoles = new ArrayList<>();
         var rol = roleRepos.findById("USER");
 
-        if(rol.isEmpty()){ return ""; }
+        if (rol.isEmpty()) {
+            return "";
+        }
 
         userRoles.add(0, rol.get());
 

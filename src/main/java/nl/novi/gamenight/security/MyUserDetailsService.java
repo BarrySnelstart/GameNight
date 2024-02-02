@@ -1,7 +1,7 @@
 package nl.novi.gamenight.security;
 
 
-import nl.novi.gamenight.Model.User.User;
+import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

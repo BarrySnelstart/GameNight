@@ -1,6 +1,6 @@
 package nl.novi.gamenight.Dto.Game;
 
-import nl.novi.gamenight.Model.Game.Category;
+import nl.novi.gamenight.Model.Category;
 
 public class GameOutputDto {
     public Long gameID;

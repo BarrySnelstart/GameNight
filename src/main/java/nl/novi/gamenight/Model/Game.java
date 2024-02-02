@@ -1,17 +1,15 @@
-package nl.novi.gamenight.Model.Game;
+package nl.novi.gamenight.Model;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import nl.novi.gamenight.Model.review.Review;
-
 
 
 import java.util.List;
 
 @Getter
 @Setter
-@Entity (name = "games")
+@Entity(name = "games")
 public class Game {
     @Id
     @GeneratedValue

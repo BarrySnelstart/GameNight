@@ -2,7 +2,7 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
-import nl.novi.gamenight.Model.Game.Game;
+import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,10 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public ResponseEntity <Object> addGame(@Validated GameInputDto gameInput, BindingResult bindingResult) {
+    public ResponseEntity<Object> addGame(@Validated GameInputDto gameInput, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            Map <String, String> errors = new HashMap <>();
+            Map<String, String> errors = new HashMap<>();
             for (FieldError error : bindingResult.getFieldErrors()) {
                 errors.put(error.getField(), error.getDefaultMessage());
             }
@@ -37,14 +37,15 @@ public class GameService {
         }
     }
 
-    public List <GameOutputDto> getAllGames() {
-        List <GameOutputDto> allGamesList = new ArrayList <>();
+    public List<GameOutputDto> getAllGames() {
+        List<GameOutputDto> allGamesList = new ArrayList<>();
         for (Game games : gameRepository.findAll()) {
             allGamesList.add(fromEntityToGameOutputDto(games));
         }
         return allGamesList;
     }
-/*TODO Exception handler for id not found*/
+
+    /*TODO Exception handler for id not found*/
     public GameOutputDto getGameByID(Long id) {
 
         var game = gameRepository.getReferenceById(id);
@@ -52,12 +53,12 @@ public class GameService {
     }
 
     public ResponseEntity deleteGameByID(Long id) {
-        Optional <Game> ifExist = gameRepository.findById(id);
+        Optional<Game> ifExist = gameRepository.findById(id);
         if (ifExist.isPresent()) {
             gameRepository.deleteById(id);
             return ResponseEntity.ok("Deleted");
         } else {
-            return new ResponseEntity <>(new IdNotFoundException("GameID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new IdNotFoundException("GameID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -93,10 +94,10 @@ public class GameService {
     }
 
     public ResponseEntity updateGameByID(@Validated Long id, GameInputDto updatedGame, BindingResult bindingResult) {
-        Optional <Game> ifExist = gameRepository.findById(id);
+        Optional<Game> ifExist = gameRepository.findById(id);
         if (ifExist.isPresent()) {
             if (bindingResult.hasErrors()) {
-                Map <String, String> errors = new HashMap <>();
+                Map<String, String> errors = new HashMap<>();
                 for (FieldError error : bindingResult.getFieldErrors()) {
                     errors.put(error.getField(), error.getDefaultMessage());
                 }
@@ -116,7 +117,7 @@ public class GameService {
                 return ResponseEntity.created(null).body(updatedGame);
             }
         } else {
-            return new ResponseEntity <>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }

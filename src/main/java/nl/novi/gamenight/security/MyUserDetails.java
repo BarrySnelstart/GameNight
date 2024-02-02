@@ -1,8 +1,8 @@
 package nl.novi.gamenight.security;
 
 
-import nl.novi.gamenight.Model.User.Role;
-import nl.novi.gamenight.Model.User.User;
+import nl.novi.gamenight.Model.Role;
+import nl.novi.gamenight.Model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +17,7 @@ public class MyUserDetails implements UserDetails {
     public MyUserDetails(User user) {
         this.user = user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -31,6 +32,7 @@ public class MyUserDetails implements UserDetails {
     public Long getUserId() {
         return user.getUserID();
     }
+
     @Override
     public String getPassword() {
         return user.getPassword();
