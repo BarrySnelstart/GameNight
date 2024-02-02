@@ -2,6 +2,7 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Model.Game.Expansion;
 import nl.novi.gamenight.Model.Game.Game;
 import nl.novi.gamenight.Repository.ExpansionRepository;
 import nl.novi.gamenight.Repository.GameRepository;
@@ -18,6 +19,12 @@ import java.util.Map;
 public class ExpansionService {
     GameRepository gameRepository;
     ExpansionRepository expansionRepository;
+    public ExpansionService(GameRepository gameRepository, ExpansionRepository expansionRepository) {
+        this.gameRepository = gameRepository;
+        this.expansionRepository = expansionRepository;
+    }
+
+
     public ResponseEntity<Object> addGameExpansion(@Validated GameInputDto gameInput, BindingResult bindingResult, Long gameID) {
 
         if (bindingResult.hasErrors()) {
@@ -27,11 +34,17 @@ public class ExpansionService {
             }
             return ResponseEntity.badRequest().body(errors);
         } else {
-            Game gameExpansion = ToEntity(gameInput);
-            gameRepository.save(gameExpansion);
-            var game = expansionRepository.getReferenceById(gameID);
-            expansionRepository.save(game);
-            return ResponseEntity.created(null).body(game);
+            var mainGame = gameRepository.getReferenceById(gameID);
+            Expansion expansion = new Expansion();
+            expansion.setGames(mainGame);
+            expansionRepository.save(expansion);
+
+            Game expansionDetails = ToEntity(gameInput);
+
+            gameRepository.save(expansionDetails);
+
+            /*TODO should return gameID*/
+            return ResponseEntity.created(null).body(expansionDetails);
         }
     }
 
