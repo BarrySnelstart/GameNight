@@ -17,8 +17,9 @@
 							"script": {
 								"exec": [
 									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
-									"pm.environment.set(\"UserToken\", headerValue);\r",
-									"pm.environment.set(\"AuthToken\", headerValue);\r",
+									"var token = headerValue.split(' ')[1];\r",
+									"pm.environment.set(\"AuthToken\", token);\r",
+									"pm.environment.set(\"UserToken\", token);\r",
 									""
 								],
 								"type": "text/javascript"
@@ -63,7 +64,13 @@
 							"script": {
 								"exec": [
 									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
-									"pm.environment.set(\"AdminToken\", headerValue);"
+									"var token = headerValue.split(' ')[1];\r",
+									"pm.environment.set(\"AuthToken\", token);\r",
+									"pm.environment.set(\"AdminToken\", token);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -107,16 +114,6 @@
 				{
 					"name": "AddGame",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{AuthToken}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -169,16 +166,6 @@
 				{
 					"name": "Get Game List",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{userJwt}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -321,8 +308,28 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
-									"pm.environment.set(\"AuthToken\", headerValue);"
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Parse the request body as JSON\r",
+									"var requestBody = pm.request.body;\r",
+									"var jsonData = JSON.parse(requestBody);\r",
+									"\r",
+									"// Extract username and password\r",
+									"var username = jsonData.username;\r",
+									"var password = jsonData.password;\r",
+									"\r",
+									"// Set the username and password as variables\r",
+									"pm.environment.set(\"username\", username);\r",
+									"pm.environment.set(\"password\", password);\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -336,7 +343,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"Henkie\",\r\n    \"password\" : \"geheim2024!\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"Henkie\",\r\n    \"password\" : \"wachtwoordhenkie\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -355,6 +362,183 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Login user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"var token = headerValue.split(' ')[1];\r",
+									"pm.environment.set(\"AuthToken\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/auth",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Review",
+			"item": [
+				{
+					"name": "Create review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userReview\":\"Wat een bout spel zeg\",\r\n    \"starRating\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/review/102",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"review",
+								"102"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{AuthToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Validation Userrigts",
+			"item": [
+				{
+					"name": "As Admin",
+					"item": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{AdminToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "As User",
+					"item": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{UserToken}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				}
 			]
 		}
