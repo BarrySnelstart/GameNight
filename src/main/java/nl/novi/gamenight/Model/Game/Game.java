@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import nl.novi.gamenight.Model.review.Review;
 
+
 import java.util.List;
 
 @Getter
@@ -30,4 +31,8 @@ public class Game {
 
     @OneToMany(mappedBy = "games")
     private List<Review> reviews;
+
+    @ManyToOne
+    @JoinColumn(name = "expansionid")
+    private Expansion expansion;
 }
