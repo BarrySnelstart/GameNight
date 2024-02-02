@@ -2,12 +2,11 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.User.UserInputDto;
 import nl.novi.gamenight.Dto.User.UserOutputDto;
-import nl.novi.gamenight.Model.User.User;
+import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

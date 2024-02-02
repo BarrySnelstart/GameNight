@@ -1,7 +1,7 @@
 package nl.novi.gamenight.Repository;
 
 
-import nl.novi.gamenight.Model.User.User;
+import nl.novi.gamenight.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

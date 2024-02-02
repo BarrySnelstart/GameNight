@@ -16,8 +16,9 @@ public class ReviewController {
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
+
     @PostMapping("/{id}")
-    public ResponseEntity<Object> addReview(@Validated @PathVariable ("id")Long gameID, @RequestBody ReviewInputDto reviewInputDto, BindingResult bindingResult) {
-        return reviewService.addReview(reviewInputDto, bindingResult,gameID);
+    public ResponseEntity<Object> addReview(@Validated @PathVariable("id") Long gameID, @RequestBody ReviewInputDto reviewInputDto, BindingResult bindingResult) {
+        return reviewService.addReview(reviewInputDto, bindingResult, gameID);
     }
 }

@@ -1,13 +1,8 @@
-package nl.novi.gamenight.Model.review;
+package nl.novi.gamenight.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
-import nl.novi.gamenight.Model.Game.Game;
-import nl.novi.gamenight.Model.User.User;
-
-import java.util.List;
 
 @Getter
 @Setter

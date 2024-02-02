@@ -1,9 +1,8 @@
-package nl.novi.gamenight.Model.User;
+package nl.novi.gamenight.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import nl.novi.gamenight.Model.review.Review;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Setter
 
 
-@Entity (name = "users")
+@Entity(name = "users")
 public class User {
     @Id
     @GeneratedValue

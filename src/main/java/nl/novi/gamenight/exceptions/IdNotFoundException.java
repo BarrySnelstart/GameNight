@@ -1,6 +1,6 @@
 package nl.novi.gamenight.exceptions;
 
-public class IdNotFoundException extends RuntimeException{
+public class IdNotFoundException extends RuntimeException {
 
     public IdNotFoundException() {
     }

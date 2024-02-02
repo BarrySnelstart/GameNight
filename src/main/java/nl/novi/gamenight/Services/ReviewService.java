@@ -1,9 +1,8 @@
 package nl.novi.gamenight.Services;
+
 import nl.novi.gamenight.Dto.reviewDto.ReviewInputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewOutputDto;
-import nl.novi.gamenight.Model.Game.Game;
-import nl.novi.gamenight.Model.User.User;
-import nl.novi.gamenight.Model.review.Review;
+import nl.novi.gamenight.Model.Review;
 import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.Repository.ReviewRepository;
 import nl.novi.gamenight.Repository.UserRepository;
@@ -23,6 +22,7 @@ public class ReviewService {
     ReviewRepository reviewRepository;
     UserRepository userRepository;
     GameRepository gameRepository;
+
     public ReviewService(ReviewRepository reviewRepository, UserRepository userRepository, GameRepository gameRepository) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
@@ -30,10 +30,7 @@ public class ReviewService {
     }
 
 
-
-
-
-    public ResponseEntity<Object> addReview(ReviewInputDto reviewInputDto, BindingResult bindingResult, Long gameId ) {
+    public ResponseEntity<Object> addReview(ReviewInputDto reviewInputDto, BindingResult bindingResult, Long gameId) {
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
@@ -42,8 +39,8 @@ public class ReviewService {
             }
             return ResponseEntity.badRequest().body(errors);
         } else {
-           Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            MyUserDetails userDetails = (MyUserDetails)principal;
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            MyUserDetails userDetails = (MyUserDetails) principal;
             var user = userRepository.getReferenceById(userDetails.getUserId());
             var game = gameRepository.getReferenceById(gameId);
             Review review = new Review();
@@ -59,13 +56,14 @@ public class ReviewService {
             ReviewOutputDto reviewOutputDto = new ReviewOutputDto();
             reviewOutputDto.userReview = review.getUserReview();
             reviewOutputDto.userID = user.getUserID();
-            reviewOutputDto.starRating=review.getStarRating();
+            reviewOutputDto.starRating = review.getStarRating();
             reviewOutputDto.gameID = game.getGameID();
 
 
             return ResponseEntity.created(null).body(reviewOutputDto);
         }
     }
+
     public Review mapToEntity(ReviewInputDto reviewInput) {
         var review = new Review();
         review.setUserReview(reviewInput.userReview);

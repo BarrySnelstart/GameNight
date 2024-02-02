@@ -1,4 +1,5 @@
 package nl.novi.gamenight.Controller;
+
 import nl.novi.gamenight.Model.Logging;
 import nl.novi.gamenight.Services.LoggingService;
 import org.springframework.web.bind.annotation.GetMapping;

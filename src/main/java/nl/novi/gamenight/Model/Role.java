@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Model.User;
+package nl.novi.gamenight.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.time.LocalDateTime;
 
 @RestController
@@ -50,8 +51,7 @@ public class AuthController {
                     .body("Token generated");
 
 
-        }
-        catch (AuthenticationException ex) {
+        } catch (AuthenticationException ex) {
 
             log.setPassword(authDto.password);
             log.setUsername(authDto.username);
