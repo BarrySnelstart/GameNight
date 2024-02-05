@@ -186,14 +186,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{localBasedUrl}}/games/game/1",
+							"raw": "{{localBasedUrl}}/games/game/102",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"games",
 								"game",
-								"1"
+								"102"
 							]
 						}
 					},
@@ -417,7 +417,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userReview\":\"Wat een bout spel zeg\",\r\n    \"starRating\":1\r\n}",
+							"raw": "{\r\n    \"userReview\":\"mooi spel, maar wel complex\",\r\n    \"starRating\":5\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -425,13 +425,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{localBasedUrl}}/review/102",
+							"raw": "{{localBasedUrl}}/review/103",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"review",
-								"102"
+								"103"
 							]
 						}
 					},
@@ -539,6 +539,116 @@
 							}
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Expansion",
+			"item": [
+				{
+					"name": "Add an expansion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"name\": \"Foundations Expansion\",\r\n        \"manufacturer\": \"CMYK\",\r\n        \"minimumPlayers\": 60,\r\n        \"maximumPlayers\": 6,\r\n        \"age\": 10,\r\n        \"minimumDuration\": 60,\r\n        \"averageDuration\": 120,\r\n        \"category\": \"BORD\",\r\n        \"type\": \"COOP\",\r\n        \"averageStarValue\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/expansion/106",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"expansion",
+								"106"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{AuthToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Logging",
+			"item": [
+				{
+					"name": "get log",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedUrl}}/logging",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"logging"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "false login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"noteauser\",\r\n    \"password\" : \"apassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/auth",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
