@@ -9,8 +9,10 @@ import nl.novi.gamenight.Repository.RoleRepository;
 import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
 import nl.novi.gamenight.exceptions.UserNotUniqueException;
+import nl.novi.gamenight.security.MyUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -74,8 +76,10 @@ public class UserService {
 
     /*TODO Admin And owning user*/
     public ResponseEntity<Object> getUserByID(Long gameId) {
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        MyUserDetails userDetails = (MyUserDetails) principal;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetails userDetails = (MyUserDetails) principal;
+        //userRepository.findByUsername(userDetails.getUsername());
+
         UserOutputDto user = toDto(userRepository.getReferenceById(gameId));
         return ResponseEntity.created(null).body(user);
     }
