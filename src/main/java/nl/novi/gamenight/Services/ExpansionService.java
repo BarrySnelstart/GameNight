@@ -1,19 +1,26 @@
 package nl.novi.gamenight.Services;
 
+import nl.novi.gamenight.Dto.Game.GameExpansionOutputDto;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Dto.User.UserInputDto;
+import nl.novi.gamenight.Dto.User.UserOutputDto;
 import nl.novi.gamenight.Model.Expansion;
 import nl.novi.gamenight.Model.Game;
+import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.ExpansionRepository;
 import nl.novi.gamenight.Repository.GameRepository;
+import nl.novi.gamenight.exceptions.IdNotFoundException;
+import nl.novi.gamenight.security.MyUserDetails;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ExpansionService {
@@ -44,10 +51,42 @@ public class ExpansionService {
 
             gameRepository.save(expansionDetails);
 
-            /*TODO should return gameID*/
+            /*TODO should return BasegameID See outputDto*/
             return ResponseEntity.created(null).body(expansionDetails);
         }
     }
+
+
+    public ResponseEntity deleteAGameExpansionByID(Long expansionID) {
+        Optional<Expansion> ifExist = expansionRepository.findById(expansionID);
+        if (ifExist.isPresent()) {
+            expansionRepository.deleteById(expansionID);
+            return ResponseEntity.ok("Expansion Deleted");
+        } else {
+            return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+    /*TODO Admin Only*/
+    public List<GameExpansionOutputDto> getAllExpansions() {
+        System.out.println();
+        List<GameExpansionOutputDto> allExpansionsList = new ArrayList<>();
+        for (Expansion expansion : expansionRepository.findAll()) {
+            allExpansionsList.add(toDto(expansion));
+        }
+        return allExpansionsList;
+    }
+
+    /*TODO Admin And owning user*/
+    public ResponseEntity<GameExpansionOutputDto> getExpansionsByID(Long expansionId) {
+
+        GameExpansionOutputDto expansion =toDto( expansionRepository.getReferenceById(expansionId));
+
+
+        //UserOutputDto user = toDto(expansionRepository.getReferenceById(gameId));
+        return ResponseEntity.ok().body(expansion);
+    }
+
 
     public Game ToEntity(GameInputDto gameInput) {
         var game = new Game();
@@ -63,19 +102,14 @@ public class ExpansionService {
         return game;
     }
 
-    public GameOutputDto toDto(Game game) {
-        GameOutputDto gameOutputDto = new GameOutputDto();
-        gameOutputDto.gameID = game.getGameID();
-        gameOutputDto.name = game.getName();
-        gameOutputDto.manufacturer = game.getManufacturer();
-        gameOutputDto.minimumPlayers = game.getMinimumDuration();
-        gameOutputDto.maximumPlayers = game.getMaximumPlayers();
-        gameOutputDto.age = game.getAge();
-        gameOutputDto.minimumDuration = game.getMinimumDuration();
-        gameOutputDto.averageDuration = game.getAverageDuration();
-        gameOutputDto.category = game.getCategory();
-        gameOutputDto.type = game.getType();
-        gameOutputDto.averageStarValue = game.getAverageStarValue();
-        return gameOutputDto;
+
+    public GameExpansionOutputDto toDto(Expansion GameX) {
+        GameExpansionOutputDto gameOutputDto = new GameExpansionOutputDto();
+        gameOutputDto.gameID = GameX.getExpansionID();
+            return gameOutputDto;
     }
+
+
+
+
 }
