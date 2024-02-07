@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Get User Token",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Get user JWT Token",
@@ -684,6 +684,86 @@
 							"path": [
 								"expansion",
 								"106"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get expansion list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedUrl}}/expansion",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"expansion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get expansion list ByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedUrl}}/expansion/2",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"expansion",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit  expansion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"name\": \"Editted\",\r\n        \"manufacturer\": \"CMYK\",\r\n        \"minimumPlayers\": 60,\r\n        \"maximumPlayers\": 6,\r\n        \"age\": 10,\r\n        \"minimumDuration\": 60,\r\n        \"averageDuration\": 120,\r\n        \"category\": \"BORD\",\r\n        \"type\": \"COOP\",\r\n        \"averageStarValue\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBasedUrl}}/expansion/2",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"expansion",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a expansin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localBasedUrl}}/expansion/1",
+							"host": [
+								"{{localBasedUrl}}"
+							],
+							"path": [
+								"expansion",
+								"1"
 							]
 						}
 					},
