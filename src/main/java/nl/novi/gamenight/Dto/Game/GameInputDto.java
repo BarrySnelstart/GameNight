@@ -31,6 +31,6 @@ public class GameInputDto {
     @NotBlank(message = "Type cannot be empty or null")
     public String type;
 
-    //public String averageStarValue;
+    public String averageStarValue;
 
 }
