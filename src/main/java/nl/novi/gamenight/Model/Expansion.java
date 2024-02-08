@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "epansions")
+@Entity(name = "expansions")
 public class Expansion {
     @Id
     @GeneratedValue
