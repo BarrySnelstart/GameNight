@@ -37,6 +37,7 @@ public class GameService {
         }
     }
 
+    /*TODO Should not return a Expansion */
     public List<GameOutputDto> getAllGames() {
         List<GameOutputDto> allGamesList = new ArrayList<>();
         for (Game games : gameRepository.findAll()) {
@@ -46,6 +47,7 @@ public class GameService {
     }
 
     /*TODO Exception handler for id not found*/
+    /*TODO Should not return a Expansion */
     public GameOutputDto getGameByID(Long id) {
 
         var game = gameRepository.getReferenceById(id);

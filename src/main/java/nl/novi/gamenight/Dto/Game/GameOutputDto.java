@@ -14,5 +14,4 @@ public class GameOutputDto {
     public Category category;
     public String type;
     public String averageStarValue;
-
 }

@@ -1,10 +1,8 @@
 package nl.novi.gamenight.Controller;
 
 
-import nl.novi.gamenight.Dto.Game.GameExpansionOutputDto;
+import nl.novi.gamenight.Dto.expansionDto.GameExpansionOutputDto;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
-import nl.novi.gamenight.Dto.User.UserOutputDto;
-import nl.novi.gamenight.Model.Expansion;
 import nl.novi.gamenight.Services.ExpansionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -37,7 +35,7 @@ public class ExpansionController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<GameExpansionOutputDto> getExpansionByID(@PathVariable("id") Long ID) {
+    public ResponseEntity<Object> getExpansionByID(@PathVariable("id") Long ID) {
         return expansionService.getExpansionsByID(ID);
     }
 
