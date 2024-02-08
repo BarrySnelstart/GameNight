@@ -1,6 +1,7 @@
 package nl.novi.gamenight.Controller;
 
 
+import nl.novi.gamenight.Dto.expansionDto.GameExpansionInPutDto;
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionOutputDto;
 import nl.novi.gamenight.Dto.Game.GameInputDto;
 import nl.novi.gamenight.Services.ExpansionService;
@@ -37,6 +38,10 @@ public class ExpansionController {
     @GetMapping("{id}")
     public ResponseEntity<Object> getExpansionByID(@PathVariable("id") Long ID) {
         return expansionService.getExpansionsByID(ID);
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("id") Long expansionID, @RequestBody GameExpansionInPutDto expansionData){
+        return expansionService.updateGameExpansion(expansionID, expansionData);
     }
 
 }

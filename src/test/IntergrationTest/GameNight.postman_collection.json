@@ -186,14 +186,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{localBasedUrl}}/games/game/102",
+							"raw": "{{localBasedUrl}}/games/game/110",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"games",
 								"game",
-								"102"
+								"110"
 							]
 						}
 					},
@@ -707,18 +707,18 @@
 					"response": []
 				},
 				{
-					"name": "Get expansion list ByID",
+					"name": "Get expansion  ByID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{localBasedUrl}}/expansion/2",
+							"raw": "{{localBasedUrl}}/expansion/110",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"expansion",
-								"2"
+								"110"
 							]
 						}
 					},
@@ -731,7 +731,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\r\n        \"name\": \"Editted\",\r\n        \"manufacturer\": \"CMYK\",\r\n        \"minimumPlayers\": 60,\r\n        \"maximumPlayers\": 6,\r\n        \"age\": 10,\r\n        \"minimumDuration\": 60,\r\n        \"averageDuration\": 120,\r\n        \"category\": \"BORD\",\r\n        \"type\": \"COOP\",\r\n        \"averageStarValue\": null\r\n    }",
+							"raw": "{\r\n    \"gameID\": 110,\r\n    \"name\": \"changed\",\r\n    \"manufacturer\": \"changed\",\r\n    \"minimumPlayers\": 10,\r\n    \"maximumPlayers\": 1,\r\n    \"age\": 11,\r\n    \"minimumDuration\": 30,\r\n    \"averageDuration\": 90,\r\n    \"category\": \"BORD\",\r\n    \"type\": \"GezeldscSpel\",\r\n    \"averageStarValue\": null,\r\n    \"baseGameID\": 104\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -739,13 +739,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{localBasedUrl}}/expansion/2",
+							"raw": "{{localBasedUrl}}/expansion/110",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"expansion",
-								"2"
+								"110"
 							]
 						}
 					},
@@ -757,13 +757,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{localBasedUrl}}/expansion/1",
+							"raw": "{{localBasedUrl}}/expansion/110",
 							"host": [
 								"{{localBasedUrl}}"
 							],
 							"path": [
 								"expansion",
-								"1"
+								"110"
 							]
 						}
 					},
