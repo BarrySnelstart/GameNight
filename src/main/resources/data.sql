@@ -11,7 +11,8 @@ VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gez
        (107, 'Guild of Merchant Explorers ', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
        (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
        (109, 'Illiterati', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (110, 'De Kolonisten van Catan: Het grote Kanaal', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel');
+       (110, 'De Kolonisten van Catan: Het grote Kanaal', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel'),
+       (111, 'Kathedralen & Herbergen Uitbreiding Bordspel', '999 games', 12, 2, 4, 25, 80, 'BORD', 'Gezeldschap Spel');
 
 insert into roles(user_role)
 values ('USER'),
@@ -35,6 +36,8 @@ VALUES (101, 103, 102, 4, 'Helemaal tegek'),
        (102, 102, 102, 3, 'Wordt heel gauw best wel zaai');
 
 insert into expansions(expansionid, gameid)
-VALUES (110, 101)
+VALUES (110, 101),
+       (111, 102)
+
 
 

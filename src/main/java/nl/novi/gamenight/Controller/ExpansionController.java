@@ -29,10 +29,10 @@ public class ExpansionController {
         return expansionService.deleteAGameExpansionByID(expansionID);
     }
 
-//    @GetMapping
-//    public List<GameExpansionOutputDto> getAllExpansions() {
-//        return expansionService.getAllExpansions();
-//    }
+    @GetMapping
+    public List<GameExpansionOutputDto> getAllExpansions() {
+        return expansionService.getAllExpansions();
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<Object> getExpansionByID(@PathVariable("id") Long ID) {

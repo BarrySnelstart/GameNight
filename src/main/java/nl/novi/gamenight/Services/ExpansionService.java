@@ -62,14 +62,18 @@ public class ExpansionService {
 
     }
     /*TODO Admin Only*/
-//    public List<GameExpansionOutputDto> getAllExpansions() {
-//        System.out.println();
-//        List<GameExpansionOutputDto> allExpansionsList = new ArrayList<>();
-//        for (Expansion expansion : expansionRepository.findAll()) {
-//            allExpansionsList.add(toDto(expansion));
-//        }
-//        return allExpansionsList;
-//    }
+    public List<GameExpansionOutputDto> getAllExpansions() {
+
+        List<GameExpansionOutputDto> allExpansionsList = new ArrayList<>();
+
+        for (Expansion expansion : expansionRepository.findAll()) {
+
+            var gameData = gameRepository.getReferenceById(expansion.getExpansionID());
+            var baseGameData = gameRepository.getReferenceById(expansion.getGames().getGameID());
+            allExpansionsList.add(toDto(expansion, gameData, baseGameData));
+        }
+        return allExpansionsList;
+    }
 
     /*TODO Admin And owning user*/
     /*TODO Error handling*/
