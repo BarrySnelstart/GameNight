@@ -31,9 +31,10 @@ public class ReviewService {
         this.gameRepository = gameRepository;
     }
 
-/*TODO Star rating on game entity should be a result of ...*/
+    /*TODO Star rating on game entity should be a result of ...*/
     /*TODO Add validation on input*/
     /*TODO A game cannot have more then one review per USER*/
+    /*TODO Return should return all data*/
     public ResponseEntity<Object> addReview(ReviewInputDto reviewInputDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -59,7 +60,7 @@ public class ReviewService {
             reviewRepository.save(review);
 
             /*TODO USE MAPPER
-            *  ADD UserName and GameName to OutputDto*/
+             *  ADD UserName and GameName to OutputDto*/
             /*TODO Add review id to response */
             ReviewOutputDto reviewOutputDto = new ReviewOutputDto();
             reviewOutputDto.userReview = review.getUserReview();
@@ -72,8 +73,6 @@ public class ReviewService {
         }
     }
 
-
-/*TODO Should not return Userinfo to guest users.*/
     public List<ReviewOutputDto> getReviewList() {
         List<ReviewOutputDto> reviewOutputDtoList = new ArrayList<>();
         for (Review review : reviewRepository.findAll()) {
@@ -83,17 +82,17 @@ public class ReviewService {
         return reviewOutputDtoList;
 
     }
-    /*TODO Only for USERS*/
+
     /*TODO Resonse should include GAME ID AND USERID*/
     /*TODO Nice to have, should return GAME name and User Name*/
-public ResponseEntity<ReviewOutputDto> getReviewByID (Long reviewID) {
+    public ResponseEntity<ReviewOutputDto> getReviewByID(Long reviewID) {
         ReviewOutputDto foundReview = toDto(reviewRepository.getReferenceById(reviewID));
         return ResponseEntity.ok().body(foundReview);
-}
+    }
     //    public ResponseEntity deleteReviewByID(Long id) {
 //    }
 
-    /*TODO Should only be possible for a Admin and the owning user */
+    /*TODO Owning User should be able to update his game */
     /*TODO if score is changed recalculation should be done on Game average star rating*/
     /*TODO Add validation*/
     /*TODO Resonse should include GAME ID AND USERID*/
@@ -119,9 +118,10 @@ public ResponseEntity<ReviewOutputDto> getReviewByID (Long reviewID) {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    /*TODO Should only be possible for a Admin and the owning user */
+
+    /*TODO Owning User should be able to update his game */
     /*TODO ID Exception handling is not working*/
-    public ResponseEntity deleteReviewByID (Long reviewID) {
+    public ResponseEntity deleteReviewByID(Long reviewID) {
         Optional<User> ifExist = userRepository.findById(reviewID);
         if (ifExist.isPresent()) {
             userRepository.deleteById(reviewID);
@@ -141,6 +141,7 @@ public ResponseEntity<ReviewOutputDto> getReviewByID (Long reviewID) {
             return new ResponseEntity<>(new IdNotFoundException("UserID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     public ReviewOutputDto toDto(Review review) {
         ReviewOutputDto reviewOutputDto = new ReviewOutputDto();
         reviewOutputDto.userReview = review.getUserReview();

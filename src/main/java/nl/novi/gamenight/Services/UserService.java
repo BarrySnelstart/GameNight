@@ -75,13 +75,9 @@ public class UserService {
     }
 
     /*TODO Admin And owning user*/
-    public ResponseEntity<Object> getUserByID(Long gameId) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MyUserDetails userDetails = (MyUserDetails) principal;
-        //userRepository.findByUsername(userDetails.getUsername());
-
-        UserOutputDto user = toDto(userRepository.getReferenceById(gameId));
-        return ResponseEntity.created(null).body(user);
+    public ResponseEntity<Object> getUserByID(Long userId) {
+        UserOutputDto user = toDto(userRepository.getReferenceById(userId));
+        return ResponseEntity.ok(user);
     }
 
     /*TODO Admin And owning user*/

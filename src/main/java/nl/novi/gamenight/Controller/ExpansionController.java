@@ -21,16 +21,16 @@ public class ExpansionController {
         this.expansionService = expansionService;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("create/{id}")
     public ResponseEntity<Object> addGameExpansion(@Validated @PathVariable("id") Long gameID, @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
         return expansionService.addGameExpansion(gameInputDto, bindingResult, gameID);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity deleteAGameExpansionByID(@PathVariable("id") Long expansionID){
         return expansionService.deleteAGameExpansionByID(expansionID);
     }
 
-    @GetMapping
+    @GetMapping("expansions")
     public List<GameExpansionOutputDto> getAllExpansions() {
         return expansionService.getAllExpansions();
     }
@@ -39,7 +39,7 @@ public class ExpansionController {
     public ResponseEntity<Object> getExpansionByID(@PathVariable("id") Long ID) {
         return expansionService.getExpansionsByID(ID);
     }
-    @PutMapping("{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("id") Long expansionID, @RequestBody GameExpansionInPutDto expansionData){
         return expansionService.updateGameExpansion(expansionID, expansionData);
     }

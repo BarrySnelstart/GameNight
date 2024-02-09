@@ -19,17 +19,14 @@ values ('USER'),
        ('ADMIN');
 
 insert into users(userid, username, password)
--- TODO DELETE text based password
--- DELETE! user = userwachtwoord
--- DELETE! admin = adminwachtwoord
-VALUES (101, 'user', '$2a$10$CMXKhEA.yLjrVICpqZfmNeSKQA.YAuGNau//Mnx.VylNf3C9y5V1m'),
-       (102, 'admin', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
-       (103, 'Randomuser', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
+VALUES (101, 'testUserUser', '$2a$10$CMXKhEA.yLjrVICpqZfmNeSKQA.YAuGNau//Mnx.VylNf3C9y5V1m'),
+       (102, 'testUserUserAndAdmin', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
+       (103, 'testUserAdminonly', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
 insert into users_roles(users_userid, roles_user_role)
 VALUES (101, 'USER'),
        (102, 'ADMIN'),
        (102, 'USER'),
-       (103, 'USER');
+       (103, 'ADMIN');
 
 insert into reviews (reviewid, userid, gameid, star_rating, user_review)
 VALUES (101, 103, 102, 4, 'Helemaal tegek'),
