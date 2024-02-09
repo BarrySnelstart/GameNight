@@ -52,8 +52,8 @@ public class ExpansionService {
             return ResponseEntity.created(null).body(expansionDetails);
         }
     }
-    /*TODO Admin and owning user Only*/
-    public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("id") Long expansionID, @RequestBody GameExpansionInPutDto gameExpansionInPutDto){
+
+    public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("id") Long expansionID, @RequestBody GameExpansionInPutDto gameExpansionInPutDto) {
         Optional<Expansion> ifExist = expansionRepository.findById(expansionID);
         System.out.println();
         if (ifExist.isPresent()) {
@@ -79,8 +79,7 @@ public class ExpansionService {
             var gameData = gameRepository.getReferenceById(expansionData.getExpansionID());
             var baseGameData = gameRepository.getReferenceById(expansionData.getGames().getGameID());
             return ResponseEntity.ok().body(toDto(expansionData, gameData, baseGameData));
-        }
-        else {
+        } else {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
 
@@ -96,7 +95,7 @@ public class ExpansionService {
         }
 
     }
-    /*TODO Admin Only*/
+
     public List<GameExpansionOutputDto> getAllExpansions() {
 
         List<GameExpansionOutputDto> allExpansionsList = new ArrayList<>();
@@ -110,7 +109,6 @@ public class ExpansionService {
         return allExpansionsList;
     }
 
-    /*TODO Admin And user*/
     /*TODO Error handling*/
     public ResponseEntity<Object> getExpansionsByID(Long expansionId) {
 
@@ -129,11 +127,10 @@ public class ExpansionService {
     }
 
 
-
     public Game ToGameEntity(GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);
-       game.setManufacturer(gameInput.manufacturer);
+        game.setManufacturer(gameInput.manufacturer);
         game.setMinimumPlayers(gameInput.minimumPlayers);
         game.setMaximumPlayers(gameInput.maximumPlayers);
         game.setAge(gameInput.age);
@@ -145,7 +142,7 @@ public class ExpansionService {
     }
 
 
-    public GameExpansionOutputDto toDto(Expansion expansionData ,Game game, Game baseGame) {
+    public GameExpansionOutputDto toDto(Expansion expansionData, Game game, Game baseGame) {
         GameExpansionOutputDto gameOutputDto = new GameExpansionOutputDto();
         gameOutputDto.gameID = expansionData.getExpansionID();
         gameOutputDto.name = game.getName();
@@ -162,8 +159,6 @@ public class ExpansionService {
         gameOutputDto.baseGameName = baseGame.getName();
         return gameOutputDto;
     }
-
-
 
 
 }
