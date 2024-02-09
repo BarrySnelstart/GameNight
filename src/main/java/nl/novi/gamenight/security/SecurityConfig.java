@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/logging/**").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/log/getlog").hasAnyAuthority("USER")
 
 
                 .requestMatchers(HttpMethod.POST, "/game/create").hasAnyAuthority("USER")
