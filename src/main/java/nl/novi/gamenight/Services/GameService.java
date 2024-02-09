@@ -53,7 +53,7 @@ public class GameService {
         var game = gameRepository.getReferenceById(id);
         return fromEntityToGameOutputDto(game);
     }
-
+/*TODO CHeck for database Constrains*/
     public ResponseEntity deleteGameByID(Long id) {
         Optional<Game> ifExist = gameRepository.findById(id);
         if (ifExist.isPresent()) {
