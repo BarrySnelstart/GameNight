@@ -50,6 +50,8 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/logging/**").hasAnyAuthority("ADMIN")
+
 
                 .requestMatchers(HttpMethod.POST, "/game/create").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/game/delete/{id}").hasAnyAuthority("ADMIN")
@@ -59,7 +61,7 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
-                .requestMatchers(HttpMethod.GET, "/logging/**").hasAnyAuthority("ADMIN")
+
 
                                 /*TODO Set Userrights*/
                 .requestMatchers(HttpMethod.POST, "/user/create").anonymous()
