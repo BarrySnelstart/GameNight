@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("review")
+@RequestMapping
 public class ReviewController {
     public final ReviewService reviewService;
 
@@ -22,29 +22,29 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    /*TODO only for users*/
-    @PostMapping
+
+    @PostMapping("review")
     public ResponseEntity<Object> addReview(@Validated  @RequestBody ReviewInputDto reviewInputDto, BindingResult bindingResult) {
         return reviewService.addReview(reviewInputDto, bindingResult);
     }
-    /*TODO Alle rechten toegestaan, return mag geen userdetails tonen als niet ingelogd.*/
-    @GetMapping
+
+    @GetMapping("reviews")
     public List<ReviewOutputDto> getReviewList ()
     {
         return reviewService.getReviewList();
     }
-    @PutMapping("{id}")
+    @PutMapping("review/{id}")
     public ResponseEntity<Object>  updateReviewByID(@Validated @PathVariable("id") Long reviewID, @RequestBody ReviewInputDto updatedReview, BindingResult bindingResult)
     {
         return reviewService.updateReviewByID(reviewID, updatedReview, bindingResult);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("review/{id}")
     public ResponseEntity<ReviewOutputDto>  getReviewByID (@PathVariable("id") Long reviewID)
     {
         return reviewService.getReviewByID(reviewID);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("review/{id}")
     public ResponseEntity deleteReviewByID(@PathVariable("id") Long ID) {
         return reviewService.deleteReviewByID(ID);
     }
