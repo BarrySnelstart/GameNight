@@ -50,18 +50,33 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/expansion/**").hasAuthority("USER")
-                .requestMatchers(HttpMethod.POST, "/review/**").hasAuthority("USER")
-                .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/games/**").hasAuthority("USER")
-                .requestMatchers(HttpMethod.PUT, "/games/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/games/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/game/create").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.DELETE, "/game/delete/{id}").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/game/update/{id}").hasAnyAuthority("ADMIN")
+                 .requestMatchers(HttpMethod.GET, "/game/{id}").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/game/games").permitAll()
 
-                .requestMatchers("/secret").hasAuthority("ADMIN")
+
+
+
+
+
+
+
+
+
+//                .requestMatchers(HttpMethod.POST, "/expansion/**").hasAuthority("USER")
+//                .requestMatchers(HttpMethod.POST, "/review/**").hasAuthority("USER")
+//                .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+//
+//                .requestMatchers(HttpMethod.PUT, "/games/**").hasAuthority("ADMIN")
+//                .requestMatchers(HttpMethod.DELETE, "/games/**").hasAuthority("ADMIN")
+
+
                 //.requestMatchers("/**").hasAnyAuthority("USER", "ADMIN")
-                //.anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
+                //.anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new nl.novi.gamenight.security.JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
