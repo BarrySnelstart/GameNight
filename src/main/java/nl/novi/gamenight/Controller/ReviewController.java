@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("review")
 public class ReviewController {
     public final ReviewService reviewService;
 
@@ -23,7 +23,7 @@ public class ReviewController {
     }
 
 
-    @PostMapping("review")
+    @PostMapping("/create")
     public ResponseEntity<Object> addReview(@Validated  @RequestBody ReviewInputDto reviewInputDto, BindingResult bindingResult) {
         return reviewService.addReview(reviewInputDto, bindingResult);
     }
@@ -33,18 +33,18 @@ public class ReviewController {
     {
         return reviewService.getReviewList();
     }
-    @PutMapping("review/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<Object>  updateReviewByID(@Validated @PathVariable("id") Long reviewID, @RequestBody ReviewInputDto updatedReview, BindingResult bindingResult)
     {
         return reviewService.updateReviewByID(reviewID, updatedReview, bindingResult);
     }
 
-    @GetMapping("review/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ReviewOutputDto>  getReviewByID (@PathVariable("id") Long reviewID)
     {
         return reviewService.getReviewByID(reviewID);
     }
-    @DeleteMapping("review/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity deleteReviewByID(@PathVariable("id") Long ID) {
         return reviewService.deleteReviewByID(ID);
     }

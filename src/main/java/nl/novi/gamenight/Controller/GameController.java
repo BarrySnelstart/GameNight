@@ -35,6 +35,7 @@ public class GameController {
         return ResponseEntity.ok().body(gameService.getGameByID(id));
     }
 
+    /*TODO for now admin only, but owning user should be able to delete his own game*/
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteGameByID(@PathVariable("id") Long id) {
         return gameService.deleteGameByID(id);
@@ -44,7 +45,7 @@ public class GameController {
     public ResponseEntity<Object> addGame(@Validated @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
         return gameService.addGame(gameInputDto, bindingResult);
     }
-
+    /*TODO for now admin only, but owning user should be able to update his own game*/
     @PutMapping("/update/{id}")
     public ResponseEntity<Object> updateGameByID(@PathVariable("id") Long id, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
         return gameService.updateGameByID(id, updatedGame, bindingResult);
