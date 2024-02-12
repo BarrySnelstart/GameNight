@@ -16,17 +16,21 @@ VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gez
 
 insert into roles(user_role)
 values ('USER'),
-       ('ADMIN');
+       ('ADMIN'),
+       ('SUPER');
 
 insert into users(userid, username, password)
 VALUES (101, 'testUserUser', '$2a$10$CMXKhEA.yLjrVICpqZfmNeSKQA.YAuGNau//Mnx.VylNf3C9y5V1m'),
        (102, 'testUserUserAndAdmin', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
-       (103, 'testUserAdminonly', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
+       (103, 'testUserAdminonly', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
+       (104, 'ChuckNorris', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
 insert into users_roles(users_userid, roles_user_role)
 VALUES (101, 'USER'),
        (102, 'ADMIN'),
        (102, 'USER'),
-       (103, 'ADMIN');
+       (103, 'ADMIN'),
+       (104, 'SUPER');
+
 
 insert into reviews (reviewid, userid, gameid, star_rating, user_review)
 VALUES (101, 103, 102, 4, 'Helemaal tegek'),
