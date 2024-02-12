@@ -31,7 +31,7 @@ public class GameService {
             }
             return ResponseEntity.badRequest().body(errors);
         } else {
-            Game game = fromGameInputDtoToEntity(gameInput);
+            Game game = ToEntity(gameInput);
             gameRepository.save(game);
             return ResponseEntity.created(null).body(game);
         }
@@ -41,7 +41,7 @@ public class GameService {
     public List<GameOutputDto> getAllGames() {
         List<GameOutputDto> allGamesList = new ArrayList<>();
         for (Game games : gameRepository.findAll()) {
-            allGamesList.add(fromEntityToGameOutputDto(games));
+            allGamesList.add(ToDTO(games));
         }
         return allGamesList;
     }
@@ -51,7 +51,7 @@ public class GameService {
     public GameOutputDto getGameByID(Long id) {
 
         var game = gameRepository.getReferenceById(id);
-        return fromEntityToGameOutputDto(game);
+        return ToDTO(game);
     }
 /*TODO CHeck for database Constrains*/
     public ResponseEntity deleteGameByID(Long id) {
@@ -65,7 +65,7 @@ public class GameService {
     }
 
 
-    public Game fromGameInputDtoToEntity(GameInputDto gameInput) {
+    public Game ToEntity(GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);
         game.setManufacturer(gameInput.manufacturer);
@@ -79,7 +79,7 @@ public class GameService {
         return game;
     }
 
-    public GameOutputDto fromEntityToGameOutputDto(Game game) {
+    public GameOutputDto ToDTO(Game game) {
         GameOutputDto gameOutputDto = new GameOutputDto();
         gameOutputDto.gameID = game.getGameID();
         gameOutputDto.name = game.getName();
@@ -91,7 +91,7 @@ public class GameService {
         gameOutputDto.averageDuration = game.getAverageDuration();
         gameOutputDto.category = game.getCategory();
         gameOutputDto.type = game.getType();
-        gameOutputDto.averageStarValue = game.getAverageStarValue();
+        //gameOutputDto.averageStarValue = game.getAverageStarValue();
         return gameOutputDto;
     }
 

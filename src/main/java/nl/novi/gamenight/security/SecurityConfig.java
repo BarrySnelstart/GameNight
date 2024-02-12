@@ -60,7 +60,7 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
-                .requestMatchers(HttpMethod.POST, "/user/create").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/user/delete/{id}/**").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/user/update/{id}/**").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user/{id}/**").hasAnyAuthority("USER")

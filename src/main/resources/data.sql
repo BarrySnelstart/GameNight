@@ -1,18 +1,18 @@
 INSERT INTO games (gameid, name, manufacturer, age, minimum_players, maximum_players, minimum_duration,
-                   average_duration, category, type)
+                   average_duration, category, type, average_star_value)
 
 
-VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel'),
-       (102, 'Carcazone', '999 games', 12, 1, 4, 25, 80, 'BORD', 'Gezeldschap Spel'),
-       (103, 'Dorfromantik', 'Pegasus', 8, 1, 6, 30, 60, 'BORD', 'COOP'),
-       (104, 'Everdell', 'Facade Games', 13, 2, 9, 20, 40, 'CARD', 'COOP BackStab'),
-       (105, 'Flamecraft', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (106, 'Foundations', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (107, 'Guild of Merchant Explorers ', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (109, 'Illiterati', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP'),
-       (110, 'De Kolonisten van Catan: Het grote Kanaal', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel'),
-       (111, 'Kathedralen & Herbergen Uitbreiding Bordspel', '999 games', 12, 2, 4, 25, 80, 'BORD', 'Gezeldschap Spel');
+VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel',0),
+       (102, 'Carcazone', '999 games', 12, 1, 4, 25, 80, 'BORD', 'Gezeldschap Spel',0),
+       (103, 'Dorfromantik', 'Pegasus', 8, 1, 6, 30, 60, 'BORD', 'COOP',0),
+       (104, 'Everdell', 'Facade Games', 13, 2, 9, 20, 40, 'CARD', 'COOP BackStab',0),
+       (105, 'Flamecraft', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (106, 'Foundations', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (107, 'Guild of Merchant Explorers ', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (109, 'Illiterati', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (110, 'De Kolonisten van Catan: Het grote Kanaal', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel',0),
+       (111, 'Kathedralen & Herbergen Uitbreiding Bordspel', '999 games', 12, 2, 4, 25, 80, 'BORD', 'Gezeldschap Spel',0);
 
 insert into roles(user_role)
 values ('USER'),
