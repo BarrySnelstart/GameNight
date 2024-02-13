@@ -50,26 +50,21 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/log/getlog").hasAnyAuthority("USER")
-
+                .requestMatchers(HttpMethod.GET, "/log/getlog").hasAnyAuthority("SUPER")
 
                 .requestMatchers(HttpMethod.POST, "/game/create").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/game/delete/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/game/update/{id}").hasAnyAuthority("ADMIN")
-                 .requestMatchers(HttpMethod.GET, "/game/{id}").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/game/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/game/games").permitAll()
 
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
-
-
-                                /*TODO Set Userrights*/
-                .requestMatchers(HttpMethod.POST, "/user/create").anonymous()
-                .requestMatchers(HttpMethod.DELETE, "/user/delete/{id}/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/user/update/{id}/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/user/{id}/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/user/users/**").permitAll()
-
+                .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/user/delete/{id}/**").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/user/update/{id}/**").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/user/{id}/**").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/user/users/**").hasAnyAuthority("ADMIN")
 
                 .requestMatchers(HttpMethod.POST, "/review/create").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/review/delete/{id}").hasAnyAuthority("ADMIN")
@@ -77,13 +72,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/review/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/review/reviews").permitAll()
 
-                .requestMatchers(HttpMethod.POST, "/expansion/create").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.POST, "/expansion/create/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/expansion/delete/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/expansion/update/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/expansion/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/expansion/expansions").permitAll()
 
-                .anyRequest().authenticated()
+                .anyRequest().denyAll()
 
                 .and()
                 .addFilterBefore(new nl.novi.gamenight.security.JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class)

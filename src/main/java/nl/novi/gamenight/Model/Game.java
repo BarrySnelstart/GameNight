@@ -11,6 +11,8 @@ import java.util.List;
 @Setter
 @Entity(name = "games")
 public class Game {
+
+
     @Id
     @GeneratedValue
     private Long gameID;
@@ -27,12 +29,31 @@ public class Game {
     private Category category;
 
     private String type;
-    private String averageStarValue;
+    private int averageStarValue;
 
     @OneToMany(mappedBy = "games")
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "games")
-    //@JoinColumn(name = "expansionid")
     private List<Expansion> expansion;
+
+
+    public Game(Long gameID, String name, String manufacturer, int minimumPlayers, int maximumPlayers, int age, int minimumDuration, int averageDuration, Category category, String type, int averageStarValue) {
+        this.gameID = gameID;
+        this.name = name;
+        this.manufacturer = manufacturer;
+        this.minimumPlayers = minimumPlayers;
+        this.maximumPlayers = maximumPlayers;
+        this.age = age;
+        this.minimumDuration = minimumDuration;
+        this.averageDuration = averageDuration;
+        this.category = category;
+        this.type = type;
+        this.averageStarValue = averageStarValue;
+        this.reviews = reviews;
+        this.expansion = expansion;
+    }
+
+    public Game() {
+    }
 }

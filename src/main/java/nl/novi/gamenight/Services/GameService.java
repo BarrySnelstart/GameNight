@@ -21,7 +21,6 @@ public class GameService {
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
-
     public ResponseEntity<Object> addGame(@Validated GameInputDto gameInput, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -31,27 +30,22 @@ public class GameService {
             }
             return ResponseEntity.badRequest().body(errors);
         } else {
-            Game game = fromGameInputDtoToEntity(gameInput);
+            Game game = ToEntity(gameInput);
             gameRepository.save(game);
             return ResponseEntity.created(null).body(game);
         }
     }
-
-    /*TODO Should not return a Expansion */
     public List<GameOutputDto> getAllGames() {
         List<GameOutputDto> allGamesList = new ArrayList<>();
         for (Game games : gameRepository.findAll()) {
-            allGamesList.add(fromEntityToGameOutputDto(games));
+            allGamesList.add(ToDTO(games));
         }
         return allGamesList;
     }
-
-    /*TODO Exception handler for id not found*/
-    /*TODO Should not return a Expansion */
     public GameOutputDto getGameByID(Long id) {
 
         var game = gameRepository.getReferenceById(id);
-        return fromEntityToGameOutputDto(game);
+        return ToDTO(game);
     }
 /*TODO CHeck for database Constrains*/
     public ResponseEntity deleteGameByID(Long id) {
@@ -63,9 +57,7 @@ public class GameService {
             return new ResponseEntity<>(new IdNotFoundException("GameID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
-
-    public Game fromGameInputDtoToEntity(GameInputDto gameInput) {
+    public Game ToEntity(GameInputDto gameInput) {
         var game = new Game();
         game.setName(gameInput.name);
         game.setManufacturer(gameInput.manufacturer);
@@ -78,8 +70,7 @@ public class GameService {
         game.setType(gameInput.type);
         return game;
     }
-
-    public GameOutputDto fromEntityToGameOutputDto(Game game) {
+    public GameOutputDto ToDTO(Game game) {
         GameOutputDto gameOutputDto = new GameOutputDto();
         gameOutputDto.gameID = game.getGameID();
         gameOutputDto.name = game.getName();
@@ -94,7 +85,6 @@ public class GameService {
         gameOutputDto.averageStarValue = game.getAverageStarValue();
         return gameOutputDto;
     }
-
     public ResponseEntity updateGameByID(@Validated Long id, GameInputDto updatedGame, BindingResult bindingResult) {
         Optional<Game> ifExist = gameRepository.findById(id);
         if (ifExist.isPresent()) {
@@ -121,9 +111,5 @@ public class GameService {
         } else {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 }
-
-
-
