@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/review/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/review/reviews").permitAll()
 
-                .requestMatchers(HttpMethod.POST, "/expansion/create").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.POST, "/expansion/create/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/expansion/delete/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/expansion/update/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/expansion/{id}").hasAnyAuthority("USER")
