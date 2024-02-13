@@ -62,8 +62,8 @@ public class ExpansionService {
             expansionUpdate.setGames(gameUpdate);
             expansionRepository.save(expansionUpdate);
 
-            var gameToUpdate = gameRepository.getReferenceById(expansionID);
-            /*TODO Make use off mapping*/
+            var gameToUpdate = gameRepository.getReferenceById(gameExpansionInPutDto.baseGameID);
+
             gameToUpdate.setName(gameExpansionInPutDto.getName());
             gameToUpdate.setManufacturer(gameExpansionInPutDto.getManufacturer());
             gameToUpdate.setMinimumPlayers(gameExpansionInPutDto.getMinimumPlayers());
@@ -109,8 +109,7 @@ public class ExpansionService {
         return allExpansionsList;
     }
 
-    /*TODO Error handling*/
-    public ResponseEntity<Object> getExpansionsByID(Long expansionId) {
+        public ResponseEntity<Object> getExpansionsByID(Long expansionId) {
 
         Optional<Expansion> ifExist = expansionRepository.findById(expansionId);
         if (ifExist.isPresent()) {
@@ -140,6 +139,7 @@ public class ExpansionService {
         game.setType(gameInput.type);
         return game;
     }
+
 
 
     public GameExpansionOutputDto toDto(Expansion expansionData, Game game, Game baseGame) {

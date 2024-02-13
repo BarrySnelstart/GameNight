@@ -16,4 +16,11 @@ public class Expansion {
     @JoinColumn(name = "gameid")
     private Game games;
 
+    public Expansion(Long expansionID, Game games) {
+        this.expansionID = expansionID;
+        this.games = games;
+    }
+
+    public Expansion() {
+    }
 }
