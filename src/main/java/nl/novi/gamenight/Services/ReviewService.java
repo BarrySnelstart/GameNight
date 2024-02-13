@@ -52,25 +52,40 @@ public class ReviewService {
 
             review.setUserReview(reviewInputDto.userReview);
             review.setStarRating(reviewInputDto.starRating);
+
             review.setGames(game);
             review.setUsers(user);
-            /*TODO Retyrn reviewID*/
-            //review.setReviewID(reviewRepository.getReferenceById());
-
             reviewRepository.save(review);
-
-            /*TODO USE MAPPER
-             *  ADD UserName and GameName to OutputDto*/
             /*TODO Add review id to response */
-            ReviewOutputDto reviewOutputDto = new ReviewOutputDto();
-            reviewOutputDto.userReview = review.getUserReview();
+
+            updateStarValue(reviewInputDto.gameID);
+            ReviewOutputDto reviewOutputDto = toDto(review);
+            reviewOutputDto.gameID = reviewInputDto.gameID;
             reviewOutputDto.userID = user.getUserID();
-            reviewOutputDto.starRating = review.getStarRating();
-            reviewOutputDto.gameID = game.getGameID();
-
-
             return ResponseEntity.created(null).body(reviewOutputDto);
         }
+    }
+
+    void updateStarValue(Long gameID) {
+        System.out.println();
+
+        int count = 0;
+        int value = 0;
+        int averageValue = 0;
+
+
+        for (Review review : reviewRepository.findAll()) {
+
+            if (review.getGames().getGameID() == (gameID)) {
+
+                value = value + review.getStarRating();
+                count++;
+            }
+        }
+        averageValue = value / count;
+        var game = gameRepository.getReferenceById(gameID);
+        game.setAverageStarValue(averageValue);
+        gameRepository.save(game);
     }
 
     public List<ReviewOutputDto> getReviewList() {
@@ -83,20 +98,12 @@ public class ReviewService {
 
     }
 
-    /*TODO Resonse should include GAME ID AND USERID*/
-    /*TODO Nice to have, should return GAME name and User Name*/
     public ResponseEntity<ReviewOutputDto> getReviewByID(Long reviewID) {
         ReviewOutputDto foundReview = toDto(reviewRepository.getReferenceById(reviewID));
         return ResponseEntity.ok().body(foundReview);
     }
-    //    public ResponseEntity deleteReviewByID(Long id) {
-//    }
 
-    /*TODO Owning User should be able to update his game */
-    /*TODO if score is changed recalculation should be done on Game average star rating*/
-    /*TODO Add validation*/
-    /*TODO Resonse should include GAME ID AND USERID*/
-    /*TODO Nice to have, should return GAME name and User Name*/
+
     public ResponseEntity<Object> updateReviewByID(Long reviewID, ReviewInputDto updatedReviewInput, BindingResult bindingResult) {
         Optional<Review> ifExist = reviewRepository.findById(reviewID);
 
@@ -110,8 +117,8 @@ public class ReviewService {
             } else {
                 ReviewOutputDto foundReview = toDto(reviewRepository.getReferenceById(reviewID));
                 foundReview.userReview = updatedReviewInput.userReview;
+                updateStarValue(foundReview.gameID);
                 reviewRepository.save(toEntity(updatedReviewInput));
-
                 return ResponseEntity.ok(foundReview);
             }
         } else {
@@ -119,7 +126,6 @@ public class ReviewService {
         }
     }
 
-    /*TODO Owning User should be able to update his game */
     /*TODO ID Exception handling is not working*/
     public ResponseEntity deleteReviewByID(Long reviewID) {
         Optional<User> ifExist = userRepository.findById(reviewID);
@@ -131,22 +137,13 @@ public class ReviewService {
         }
     }
 
-
-    public ResponseEntity deleteUserByID(Long id) {
-        Optional<User> ifExist = userRepository.findById(id);
-        if (ifExist.isPresent()) {
-            userRepository.deleteById(id);
-            return ResponseEntity.ok("User Deleted");
-        } else {
-            return new ResponseEntity<>(new IdNotFoundException("UserID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     public ReviewOutputDto toDto(Review review) {
         ReviewOutputDto reviewOutputDto = new ReviewOutputDto();
         reviewOutputDto.userReview = review.getUserReview();
         reviewOutputDto.starRating = review.getStarRating();
         reviewOutputDto.reviewID = review.getReviewID();
+        reviewOutputDto.gameID = review.getGames().getGameID();
+        reviewOutputDto.userID = review.getUsers().getUserID();
         return reviewOutputDto;
     }
 

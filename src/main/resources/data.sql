@@ -2,11 +2,11 @@ INSERT INTO games (gameid, name, manufacturer, age, minimum_players, maximum_pla
                    average_duration, category, type, average_star_value)
 
 
-VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel',0),
-       (102, 'Carcazone', '999 games', 12, 1, 4, 25, 80, 'BORD', 'Gezeldschap Spel',0),
+VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel',4),
+       (102, 'Carcazone', '999 games', 12, 1, 4, 25, 80, 'BORD', 'Gezeldschap Spel',3),
        (103, 'Dorfromantik', 'Pegasus', 8, 1, 6, 30, 60, 'BORD', 'COOP',0),
        (104, 'Everdell', 'Facade Games', 13, 2, 9, 20, 40, 'CARD', 'COOP BackStab',0),
-       (105, 'Flamecraft', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
+       (105, 'Flamecraft', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',5),
        (106, 'Foundations', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
        (107, 'Guild of Merchant Explorers ', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
        (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
@@ -24,6 +24,7 @@ VALUES (101, 'testUserUser', '$2a$10$CMXKhEA.yLjrVICpqZfmNeSKQA.YAuGNau//Mnx.Vyl
        (102, 'testUserUserAndAdmin', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
        (103, 'testUserAdminonly', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u'),
        (104, 'ChuckNorris', '$2a$10$WVqk1XkQWMFA.drfO9ZiVeE6Idild1ZH59rYkpxyCQZnC/6cHUE8u');
+
 insert into users_roles(users_userid, roles_user_role)
 VALUES (101, 'USER'),
        (102, 'ADMIN'),
@@ -33,7 +34,8 @@ VALUES (101, 'USER'),
 
 
 insert into reviews (reviewid, userid, gameid, star_rating, user_review)
-VALUES (101, 103, 102, 4, 'Helemaal tegek'),
+VALUES (101, 103, 101, 4, 'Helemaal te gek'),
+       (103, 104, 103, 5,'Leuk spel, heel makkelijk te leren en genoeg varriatie '),
        (102, 102, 102, 3, 'Wordt heel gauw best wel zaai');
 
 insert into expansions(expansionid, gameid)

@@ -91,7 +91,7 @@ public class GameService {
         gameOutputDto.averageDuration = game.getAverageDuration();
         gameOutputDto.category = game.getCategory();
         gameOutputDto.type = game.getType();
-        //gameOutputDto.averageStarValue = game.getAverageStarValue();
+        gameOutputDto.averageStarValue = game.getAverageStarValue();
         return gameOutputDto;
     }
 

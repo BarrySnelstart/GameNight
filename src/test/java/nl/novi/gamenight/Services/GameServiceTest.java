@@ -8,7 +8,6 @@ import nl.novi.gamenight.Model.Category;
 import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
@@ -17,34 +16,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 
 
 class GameServiceTest {
     private GameInputDto game1;
     private GameInputDto game2;
-    private GameOutputDto outGame1;
-    private GameOutputDto outGame2;
 
     @Mock
     GameService gameService;
-@Mock
+
+    @Mock
     GameRepository gameRepository;
+
     @BeforeEach
-   public void setUp() {
+    public void setUp() {
         game1 = new GameInputDto("De Kolonisten van Catan: Het grote Kanaal", "999 games", 12, 2, 5, 30, 90, Category.BORD, "Gezeldschap Spel");
         game2 = new GameInputDto("Fiets hem er in", "TROS", 1, 99, 16, 30, 90, Category.OTHER, "Buiten spel");
-
-        outGame1 = new GameOutputDto(110L, "De Kolonisten van Catan: Het grote Kanaal", "999 games", 12, 2, 5, 30, 90, Category.BORD, "Gezeldschap Spel", 5);
-        outGame2 = new GameOutputDto(111L, "Kathedralen & Herbergen Uitbreiding Bordspel", "999 games", 12, 2, 4, 25, 80, Category.BORD, "Gezeldschap Spel", 4);
 
         gameRepository = mock(GameRepository.class);
         gameService = new GameService(gameRepository);
@@ -87,13 +79,12 @@ class GameServiceTest {
     }
 
     @Test
-    @Disabled
     void getAllGames() {
         // Arrange
         List<Game> games = new ArrayList<>();
         games.add(gameService.ToEntity(game1));
         games.add(gameService.ToEntity(game2));
-          when(gameRepository.findAll()).thenReturn(games);
+        when(gameRepository.findAll()).thenReturn(games);
 
         // Act
         List<GameOutputDto> allGames = gameService.getAllGames();
@@ -101,31 +92,132 @@ class GameServiceTest {
         // Assert
         assertEquals(games.size(), allGames.size());
         assertEquals(2, games.size());
-
     }
 
     @Test
-    @Disabled
+    void getAllGamesFails() {
+        // Arrange
+        List<Game> games = new ArrayList<>();
+        games.add(gameService.ToEntity(game1));
+        games.add(gameService.ToEntity(game2));
+        when(gameRepository.findAll()).thenReturn(List.of());
+
+        // Act
+        List<GameOutputDto> allGames = gameService.getAllGames();
+
+        // Assert
+        assertNotEquals(games.size(), allGames.size());
+        assertNotEquals(0, games.size());
+    }
+
+    @Test
     void getGameByID() {
+        // Arrange
+        Long gameId = 1L;
+
+        when(gameRepository.getReferenceById(gameId)).thenReturn(gameService.ToEntity(game1));
+
+        // Act
+        GameOutputDto gameOutputDto = gameService.getGameByID(gameId);
+
+        // Assert
+        assertEquals(gameOutputDto.name, "De Kolonisten van Catan: Het grote Kanaal");
     }
 
     @Test
-    @Disabled
-    void deleteGameByID() {
+    void testDeleteGameByID_GameExists() {
+        // Arrange
+        when(gameRepository.findById(10L)).thenReturn(Optional.of(gameService.ToEntity(game1)));
+
+        // Act
+        ResponseEntity responseEntity = gameService.deleteGameByID(10L);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Deleted", responseEntity.getBody());
     }
 
     @Test
-    @Disabled
-    void fromGameInputDtoToEntity() {
+    void testDeleteGameByID_GameNotExists() {
+        when(gameRepository.findById(9L)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity responseEntity = gameService.deleteGameByID(9L);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertEquals("GameID not found in database", responseEntity.getBody());
     }
 
     @Test
-    @Disabled
-    void fromEntityToGameOutputDto() {
+    void testToEntity() {
+        // Arrange
+        GameInputDto gameInput = new GameInputDto("GameName", "Manufacturer", 2, 4, 8, 30, 60, Category.BORD, "Type");
+
+        // Act
+        Game game = gameService.ToEntity(gameInput);
+
+        // Assert
+        assertEquals(gameInput.name, game.getName());
+        assertEquals(gameInput.manufacturer, game.getManufacturer());
     }
 
     @Test
-    @Disabled
-    void updateGameByID() {
+    void testToDTO() {
+        //Arrange
+        Game game = new Game();
+        game.setGameID(1L);
+        game.setName("GameName");
+        game.setManufacturer("Manufacturer");
+        game.setMinimumPlayers(2);
+        game.setMaximumPlayers(4);
+        game.setAge(8);
+        game.setMinimumDuration(30);
+        game.setAverageDuration(60);
+        game.setCategory(Category.BORD);
+        game.setType("Type");
+
+        // Act
+        GameOutputDto gameOutputDto = gameService.ToDTO(game);
+
+        // Assert
+        assertEquals(game.getGameID(), gameOutputDto.gameID);
+        assertEquals(game.getName(), gameOutputDto.name);
+    }
+
+    @Test
+    void testUpdateGameByID_ValidationErrors() {
+        // Arrange
+        Long gameId = 1L;
+
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(true);
+
+        Game gameToUpdate = new Game();
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(gameToUpdate));
+
+        Map<String, String> expectedErrors = new HashMap<>();
+        expectedErrors.put("field", "error message");
+
+        // Act
+        ResponseEntity responseEntity = gameService.updateGameByID(gameId, game1, bindingResult);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void testUpdateGameByID_GameNotExists() {
+        // Arrange
+        Long gameId = 1L;
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        when(gameRepository.findById(gameId)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity responseEntity = gameService.updateGameByID(gameId, game1, bindingResult);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 }
