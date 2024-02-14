@@ -78,6 +78,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/expansion/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/expansion/expansions").permitAll()
 
+                .requestMatchers(HttpMethod.GET, "/manual/{id}").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.POST, "/manual/{id}").hasAnyAuthority("USER")
                 .anyRequest().denyAll()
 
                 .and()

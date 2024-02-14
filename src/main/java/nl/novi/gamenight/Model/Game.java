@@ -37,6 +37,8 @@ public class Game {
     @OneToMany(mappedBy = "games")
     private List<Expansion> expansion;
 
+    @OneToOne(mappedBy = "game")
+    private Manual manualUpDownload;
 
     public Game(Long gameID, String name, String manufacturer, int minimumPlayers, int maximumPlayers, int age, int minimumDuration, int averageDuration, Category category, String type, int averageStarValue) {
         this.gameID = gameID;
