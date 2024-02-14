@@ -27,6 +27,7 @@ public class ManualController {
 
     @PostMapping("/{id}")
     public ResponseEntity<String> upLoadManual(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") Long id) throws IOException {
+        String data = manualService.manualUpload(multipartFile, id);
         return ResponseEntity.ok("File Uploaded");
     }
 
