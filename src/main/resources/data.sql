@@ -12,7 +12,8 @@ VALUES (101, 'Colonisten van Catan', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gez
        (108, 'Harry Potter Cluedo', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
        (109, 'Illiterati', 'CMYK', 10, 1, 4, 60, 120, 'BORD', 'COOP',0),
        (110, 'De Kolonisten van Catan: Het grote Kanaal', '999 games', 12, 2, 5, 30, 90, 'BORD', 'Gezeldschap Spel',0),
-       (111, 'Kathedralen & Herbergen Uitbreiding Bordspel', '999 games', 12, 2, 4, 25, 80, 'BORD', 'Gezeldschap Spel',0);
+       (111, 'Kathedralen & Herbergen Uitbreiding Bordspel', '999 games', 12, 2, 4, 25, 80, 'BORD', 'Gezeldschap Spel',0),
+       (112, 'Doomlings', 'Doomlings LLC', 10, 2, 6, 20, 60, 'BORD', 'Gezeldschap Spel',5);
 
 insert into roles(user_role)
 values ('USER'),
@@ -36,8 +37,8 @@ VALUES (101, 'USER'),
 insert into reviews (reviewid, userid, gameid, star_rating, user_review)
 VALUES (101, 103, 101, 4, 'Helemaal te gek'),
        (103, 104, 103, 5,'Leuk spel, heel makkelijk te leren en genoeg varriatie '),
-       (102, 102, 102, 3, 'Wordt heel gauw best wel zaai');
-
+       (102, 102, 102, 3, 'Wordt heel gauw best wel zaai'),
+        (104, 103, 112, 5, 'Echt leuk spel, mooi gemaakt makkelijk te leren');
 insert into expansions(expansionid, gameid)
 VALUES (110, 101),
        (111, 102)
