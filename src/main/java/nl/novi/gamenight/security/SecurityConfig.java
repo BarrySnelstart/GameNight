@@ -50,6 +50,7 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeHttpRequests()
+
                 .requestMatchers(HttpMethod.GET, "/log/getlog").hasAnyAuthority("SUPER")
 
                 .requestMatchers(HttpMethod.POST, "/game/create").hasAnyAuthority("USER")
@@ -66,11 +67,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/user/{id}/**").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/user/users/**").hasAnyAuthority("ADMIN")
 
-                .requestMatchers(HttpMethod.POST, "/review/create").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.POST, "/review/create").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/review/delete/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/review/update/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/review/{id}").hasAnyAuthority("USER")
-                .requestMatchers(HttpMethod.GET, "/review/reviews").permitAll()
+                .requestMatchers(HttpMethod.GET, "/review/reviews").hasAnyAuthority("USER")
 
                 .requestMatchers(HttpMethod.POST, "/expansion/create/{id}").hasAnyAuthority("USER")
                 .requestMatchers(HttpMethod.DELETE, "/expansion/delete/{id}").hasAnyAuthority("ADMIN")

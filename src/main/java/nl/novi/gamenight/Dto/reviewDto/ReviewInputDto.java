@@ -19,6 +19,6 @@ public class ReviewInputDto {
     @Min(1)
     @Max(5)
     public int starRating;
-    @NotBlank
+
     public Long gameID;
 }
