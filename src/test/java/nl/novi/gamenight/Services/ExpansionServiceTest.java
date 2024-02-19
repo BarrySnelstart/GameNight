@@ -137,7 +137,17 @@ class ExpansionServiceTest {
 
         assertEquals(expansionsOutput.size(), 1);
     }
+    @Test
+    void getExpansionsByID() {
+        when(expansionRepository.findById(expansion1.getExpansionID())).thenReturn(Optional.of(expansion1));
+        when(expansionRepository.getReferenceById(expansion1.getExpansionID())).thenReturn(expansion1);
+        when(gameRepository.getReferenceById(expansion1.getExpansionID())).thenReturn(game);
+        when(gameRepository.getReferenceById(expansion1.getGames().getGameID())).thenReturn(game);
 
+        ResponseEntity<?> result = expansionService.getExpansionsByID(expansion1.getExpansionID());
+
+        assertTrue(result.getStatusCode().is2xxSuccessful());
+    }
     @Test
     void toGameEntity() {
         GameInputDto gameInput = new GameInputDto();
