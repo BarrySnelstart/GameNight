@@ -31,10 +31,6 @@ public class ReviewService {
         this.gameRepository = gameRepository;
     }
 
-    /*TODO Star rating on game entity should be a result of ...*/
-    /*TODO Add validation on input*/
-    /*TODO A game cannot have more then one review per USER*/
-    /*TODO Return should return all data*/
     public ResponseEntity<Object> addReview(ReviewInputDto reviewInputDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -126,7 +122,6 @@ public class ReviewService {
         }
     }
 
-    /*TODO ID Exception handling is not working*/
     public ResponseEntity deleteReviewByID(Long reviewID) {
         Optional<User> ifExist = userRepository.findById(reviewID);
         if (ifExist.isPresent()) {

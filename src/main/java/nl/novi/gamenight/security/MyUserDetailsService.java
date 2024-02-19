@@ -27,9 +27,4 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User whit ID not found");
         }
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return null;
-//    }
 }

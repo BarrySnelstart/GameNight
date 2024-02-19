@@ -1,10 +1,8 @@
 package nl.novi.gamenight.Controller;
 
 
-import nl.novi.gamenight.Dto.User.UserInputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewInputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewOutputDto;
-import nl.novi.gamenight.Model.Review;
 import nl.novi.gamenight.Services.ReviewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
