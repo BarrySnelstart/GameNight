@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Dto.User;
+package nl.novi.gamenight.Dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -11,8 +11,8 @@ public class Review {
     @Id
     @GeneratedValue
     Long reviewID;
-    /*TODO Grote bepalen van de varschar*/
-    @Column(columnDefinition = "VARCHAR(12000)")
+
+    @Column(columnDefinition = "VARCHAR(300)")
     String userReview;
 
     private int starRating;

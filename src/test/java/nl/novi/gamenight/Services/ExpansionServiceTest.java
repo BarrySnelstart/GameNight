@@ -1,6 +1,6 @@
 package nl.novi.gamenight.Services;
 
-import nl.novi.gamenight.Dto.Game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionInPutDto;
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionOutputDto;
 import nl.novi.gamenight.Model.Category;
@@ -9,7 +9,6 @@ import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.ExpansionRepository;
 import nl.novi.gamenight.Repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

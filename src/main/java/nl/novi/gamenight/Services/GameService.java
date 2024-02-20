@@ -1,7 +1,7 @@
 package nl.novi.gamenight.Services;
 
-import nl.novi.gamenight.Dto.Game.GameInputDto;
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
@@ -47,7 +47,6 @@ public class GameService {
         var game = gameRepository.getReferenceById(gameID);
         return ToDTO(game);
     }
-/*TODO CHeck for database Constrains*/
     public ResponseEntity deleteGameByID(Long gameID) {
         Optional<Game> ifExist = gameRepository.findById(gameID);
         if (ifExist.isPresent()) {

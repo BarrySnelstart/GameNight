@@ -3,7 +3,7 @@ package nl.novi.gamenight.Controller;
 
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionInPutDto;
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionOutputDto;
-import nl.novi.gamenight.Dto.Game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
 import nl.novi.gamenight.Services.ExpansionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,10 +39,9 @@ public class ExpansionController {
     public ResponseEntity<Object> getExpansionByID(@PathVariable("expansionID") Long expansionID) {
         return expansionService.getExpansionsByID(expansionID);
     }
-    /*TODO violates foreign key constraint */
     @PutMapping("update/{expansionID}")
     public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("expansionID") Long expansionID, @RequestBody GameExpansionInPutDto expansionData){
-        return expansionService.updateGameExpansion(expansionID, expansionData);
+    return expansionService.updateGameExpansion(expansionID, expansionData);
     }
 
 }

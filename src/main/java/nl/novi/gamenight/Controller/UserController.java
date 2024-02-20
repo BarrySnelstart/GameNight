@@ -1,7 +1,7 @@
 package nl.novi.gamenight.Controller;
 
-import nl.novi.gamenight.Dto.User.UserInputDto;
-import nl.novi.gamenight.Dto.User.UserOutputDto;
+import nl.novi.gamenight.Dto.user.UserInputDto;
+import nl.novi.gamenight.Dto.user.UserOutputDto;
 import nl.novi.gamenight.Repository.RoleRepository;
 import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.Services.UserService;

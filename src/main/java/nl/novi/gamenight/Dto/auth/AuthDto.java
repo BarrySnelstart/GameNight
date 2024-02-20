@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Dto.Auth;
+package nl.novi.gamenight.Dto.auth;
 
 public class AuthDto {
     public String username;
