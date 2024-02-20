@@ -21,18 +21,18 @@ public class ManualController {
         this.manualService = manualUpDownloadService;
         this.manualRepository = manualUpDownloadRepository;
     }
+    /*TODO Create a list*/
 
-
-    @PostMapping("/{id}")
-    public ResponseEntity<String> upLoadManual(@RequestParam("file") MultipartFile multipartFile, @PathVariable("id") Long id) throws IOException {
-        String data = manualService.manualUpload(multipartFile, id);
+    @PostMapping("/{gameID}")
+    public ResponseEntity<String> upLoadManual(@RequestParam("file") MultipartFile multipartFile, @PathVariable("gameID") Long gameID) throws IOException {
+        String data = manualService.manualUpload(multipartFile, gameID);
         return ResponseEntity.ok("File Uploaded");
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> downLoadManual(@PathVariable("id") Long id) throws IOException {
-        byte[] download = manualService.manualDownload(id);
-        Optional<Manual> dbData = manualRepository.findById(id);
+    @GetMapping("/{manualID}")
+    public ResponseEntity<?> downLoadManual(@PathVariable("manualID") Long manualID) throws IOException {
+        byte[] download = manualService.manualDownload(manualID);
+        Optional<Manual> dbData = manualRepository.findById(manualID);
         MediaType mediaType = MediaType.valueOf(dbData.get().getType());
         return ResponseEntity.ok().contentType(mediaType).body(download);
     }

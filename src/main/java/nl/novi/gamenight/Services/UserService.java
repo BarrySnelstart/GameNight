@@ -76,28 +76,28 @@ public class UserService {
         return allUsersList;
     }
 
-    public ResponseEntity<Object> getUserByID(Long userId) {
-        UserOutputDto user = toDto(userRepository.getReferenceById(userId));
+    public ResponseEntity<Object> getUserByID(Long userID) {
+        UserOutputDto user = toDto(userRepository.getReferenceById(userID));
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity deleteUserByID(Long id) {
-        if (!checkOwningUser(id)) {
+    public ResponseEntity deleteUserByID(Long userID) {
+        if (!checkOwningUser(userID)) {
             return ResponseEntity.badRequest().body("User is not authorized");
         }
 
-        Optional<User> ifExist = userRepository.findById(id);
+        Optional<User> ifExist = userRepository.findById(userID);
         if (ifExist.isPresent()) {
-            userRepository.deleteById(id);
+            userRepository.deleteById(userID);
             return ResponseEntity.ok("User Deleted");
         } else {
             return new ResponseEntity<>(new IdNotFoundException("UserID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<Object> updateUserNameByID(@Validated Long id, UserInputDto updatedUser, BindingResult bindingResult) {
-        Optional<User> ifExist = userRepository.findById(id);
-        if (!checkOwningUser(id)) {
+    public ResponseEntity<Object> updateUserNameByID(@Validated Long userID, UserInputDto updatedUser, BindingResult bindingResult) {
+        Optional<User> ifExist = userRepository.findById(userID);
+        if (!checkOwningUser(userID)) {
             return ResponseEntity.badRequest().body("User is not authorized");
         }
         if (ifExist.isPresent()) {
@@ -108,7 +108,7 @@ public class UserService {
                 }
                 return ResponseEntity.badRequest().body(errors);
             } else {
-                var updateUser = userRepository.getReferenceById(id);
+                var updateUser = userRepository.getReferenceById(userID);
                 updateUser.setUsername(updatedUser.username);
                 updateUser.setPassword(encoder.encode(updatedUser.password));
                 userRepository.save(updateUser);

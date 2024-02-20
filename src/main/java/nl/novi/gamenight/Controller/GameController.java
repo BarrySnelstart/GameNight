@@ -28,14 +28,14 @@ public class GameController {
         return gameService.getAllGames();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GameOutputDto> getGameByID(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(gameService.getGameByID(id));
+    @GetMapping("/{gameID}")
+    public ResponseEntity<GameOutputDto> getGameByID(@PathVariable("gameID") Long gameID) {
+        return ResponseEntity.ok().body(gameService.getGameByID(gameID));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteGameByID(@PathVariable("id") Long id) {
-        return gameService.deleteGameByID(id);
+    @DeleteMapping("/delete/{gameID}")
+    public ResponseEntity deleteGameByID(@PathVariable("gameID") Long gameID) {
+        return gameService.deleteGameByID(gameID);
     }
 
     @PostMapping("/create")
@@ -44,8 +44,8 @@ public class GameController {
     }
 
     /*TODO for now admin only, but owning user should be able to update his own game*/
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateGameByID(@PathVariable("id") Long id, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
-        return gameService.updateGameByID(id, updatedGame, bindingResult);
+    @PutMapping("/update/{gameID}")
+    public ResponseEntity<Object> updateGameByID(@PathVariable("gameID") Long gameID, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
+        return gameService.updateGameByID(gameID, updatedGame, bindingResult);
     }
 }

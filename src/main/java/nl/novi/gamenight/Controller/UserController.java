@@ -37,17 +37,17 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getUserByID(@PathVariable("id") Long ID) {
-        return userService.getUserByID(ID);
+    @GetMapping("/{userID}")
+    public ResponseEntity<Object> getUserByID(@PathVariable("userID") Long userID) {
+        return userService.getUserByID(userID);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteUserByID(@PathVariable("id") Long ID) {
-        return userService.deleteUserByID(ID);
+    @DeleteMapping("/delete/{userID}")
+    public ResponseEntity deleteUserByID(@PathVariable("userID") Long userID) {
+        return userService.deleteUserByID(userID);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{userID}")
     public ResponseEntity<Object>  updateUserNameByID(@Validated @PathVariable("id") Long ID,@RequestBody UserInputDto updatedUser, BindingResult bindingResult)
     {
         return userService.updateUserNameByID(ID, updatedUser, bindingResult);

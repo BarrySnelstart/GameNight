@@ -31,19 +31,19 @@ public class ReviewController {
         return reviewService.getReviewList();
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<Object> updateReviewByID(@Validated @PathVariable("id") Long reviewID, @RequestBody ReviewInputDto updatedReview, BindingResult bindingResult) {
+    @PutMapping("update/{reviewID}")
+    public ResponseEntity<Object> updateReviewByID(@Validated @PathVariable("reviewID") Long reviewID, @RequestBody ReviewInputDto updatedReview, BindingResult bindingResult) {
         return reviewService.updateReviewByID(reviewID, updatedReview, bindingResult);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ReviewOutputDto> getReviewByID(@PathVariable("id") Long reviewID) {
+    @GetMapping("/{reviewID}")
+    public ResponseEntity<ReviewOutputDto> getReviewByID(@PathVariable("reviewID") Long reviewID) {
         return reviewService.getReviewByID(reviewID);
     }
 
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity deleteReviewByID(@PathVariable("id") Long ID) {
-        return reviewService.deleteReviewByID(ID);
+    @DeleteMapping("delete/{reviewID}")
+    public ResponseEntity deleteReviewByID(@PathVariable("reviewID") Long reviewID) {
+        return reviewService.deleteReviewByID(reviewID);
     }
 
 
