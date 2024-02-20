@@ -21,12 +21,12 @@ public class ExpansionController {
         this.expansionService = expansionService;
     }
 
-    @PostMapping("create/{id}")
-    public ResponseEntity<Object> addGameExpansion(@Validated @PathVariable("id") Long gameID, @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
-        return expansionService.addGameExpansion(gameInputDto, bindingResult, gameID);
+    @PostMapping("create/{baseGameID}")
+    public ResponseEntity<Object> addGameExpansion(@Validated @PathVariable("baseGameID") Long baseGameID, @RequestBody GameInputDto gameInputDto, BindingResult bindingResult) {
+        return expansionService.addGameExpansion(gameInputDto, bindingResult, baseGameID);
     }
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity deleteAGameExpansionByID(@PathVariable("id") Long expansionID){
+    @DeleteMapping("delete/{expansionID}")
+    public ResponseEntity deleteAGameExpansionByID(@PathVariable("expansionID") Long expansionID){
         return expansionService.deleteAGameExpansionByID(expansionID);
     }
 
@@ -35,12 +35,13 @@ public class ExpansionController {
         return expansionService.getAllExpansions();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Object> getExpansionByID(@PathVariable("id") Long ID) {
-        return expansionService.getExpansionsByID(ID);
+    @GetMapping("{expansionID}")
+    public ResponseEntity<Object> getExpansionByID(@PathVariable("expansionID") Long expansionID) {
+        return expansionService.getExpansionsByID(expansionID);
     }
-    @PutMapping("update/{id}")
-    public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("id") Long expansionID, @RequestBody GameExpansionInPutDto expansionData){
+    /*TODO violates foreign key constraint */
+    @PutMapping("update/{expansionID}")
+    public ResponseEntity<Object> updateGameExpansion(@Validated @PathVariable("expansionID") Long expansionID, @RequestBody GameExpansionInPutDto expansionData){
         return expansionService.updateGameExpansion(expansionID, expansionData);
     }
 

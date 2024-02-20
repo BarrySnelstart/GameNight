@@ -52,7 +52,6 @@ public class ReviewService {
             review.setGames(game);
             review.setUsers(user);
             reviewRepository.save(review);
-            /*TODO Add review id to response */
 
             updateStarValue(reviewInputDto.gameID);
             ReviewOutputDto reviewOutputDto = toDto(review);

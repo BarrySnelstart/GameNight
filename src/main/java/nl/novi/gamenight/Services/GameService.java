@@ -42,16 +42,16 @@ public class GameService {
         }
         return allGamesList;
     }
-    public GameOutputDto getGameByID(Long id) {
+    public GameOutputDto getGameByID(Long gameID) {
 
-        var game = gameRepository.getReferenceById(id);
+        var game = gameRepository.getReferenceById(gameID);
         return ToDTO(game);
     }
 /*TODO CHeck for database Constrains*/
-    public ResponseEntity deleteGameByID(Long id) {
-        Optional<Game> ifExist = gameRepository.findById(id);
+    public ResponseEntity deleteGameByID(Long gameID) {
+        Optional<Game> ifExist = gameRepository.findById(gameID);
         if (ifExist.isPresent()) {
-            gameRepository.deleteById(id);
+            gameRepository.deleteById(gameID);
             return ResponseEntity.ok("Deleted");
         } else {
             return new ResponseEntity<>(new IdNotFoundException("GameID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
@@ -85,8 +85,8 @@ public class GameService {
         gameOutputDto.averageStarValue = game.getAverageStarValue();
         return gameOutputDto;
     }
-    public ResponseEntity updateGameByID(@Validated Long id, GameInputDto updatedGame, BindingResult bindingResult) {
-        Optional<Game> ifExist = gameRepository.findById(id);
+    public ResponseEntity updateGameByID(@Validated Long gameID, GameInputDto updatedGame, BindingResult bindingResult) {
+        Optional<Game> ifExist = gameRepository.findById(gameID);
         if (ifExist.isPresent()) {
             if (bindingResult.hasErrors()) {
                 Map<String, String> errors = new HashMap<>();
@@ -95,7 +95,7 @@ public class GameService {
                 }
                 return ResponseEntity.badRequest().body(errors);
             } else {
-                var gameToUpdate = gameRepository.getReferenceById(id);
+                var gameToUpdate = gameRepository.getReferenceById(gameID);
                 gameToUpdate.setName(updatedGame.name);
                 gameToUpdate.setManufacturer(updatedGame.manufacturer);
                 gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
