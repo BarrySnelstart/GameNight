@@ -11,6 +11,12 @@ import nl.novi.gamenight.exceptions.IdNotFoundException;
 import nl.novi.gamenight.exceptions.UserNotUniqueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -77,6 +83,10 @@ public class UserService {
     }
 
     public ResponseEntity deleteUserByID(Long id) {
+        if (!checkOwningUser(id)) {
+            return ResponseEntity.badRequest().body("User is not authorized");
+        }
+
         Optional<User> ifExist = userRepository.findById(id);
         if (ifExist.isPresent()) {
             userRepository.deleteById(id);
@@ -88,7 +98,9 @@ public class UserService {
 
     public ResponseEntity<Object> updateUserNameByID(@Validated Long id, UserInputDto updatedUser, BindingResult bindingResult) {
         Optional<User> ifExist = userRepository.findById(id);
-
+        if (!checkOwningUser(id)) {
+            return ResponseEntity.badRequest().body("User is not authorized");
+        }
         if (ifExist.isPresent()) {
             if (bindingResult.hasErrors()) {
                 Map<String, String> errors = new HashMap<>();
@@ -121,6 +133,24 @@ public class UserService {
         user.setUsername(userInputDto.username);
         user.setPassword(encoder.encode(userInputDto.password));
         return user;
+    }
+
+    private boolean checkOwningUser(Long userID) {
+        var user = userRepository.findById(userID);
+        if (user.isEmpty()) {
+            return false;
+        }
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        MyUserDetails userDetails = (MyUserDetails) principal;
+
+        if(userID.equals(userDetails.getUserId())) {
+            return true;
+        }
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+
+        return authorities.stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMIN"));
     }
 }
 
