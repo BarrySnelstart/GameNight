@@ -9,12 +9,14 @@ import nl.novi.gamenight.Repository.RoleRepository;
 import nl.novi.gamenight.Repository.UserRepository;
 import nl.novi.gamenight.exceptions.IdNotFoundException;
 import nl.novi.gamenight.exceptions.UserNotUniqueException;
-import nl.novi.gamenight.security.MyUserDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -67,7 +69,6 @@ public class UserService {
         return ResponseEntity.created(null).body(toDto(newUser));
     }
 
-    /*TODO Admin Only*/
     public List<UserOutputDto> getAllUsers() {
         List<UserOutputDto> allUsersList = new ArrayList<>();
         for (User user : userRepository.findAll()) {
@@ -76,13 +77,11 @@ public class UserService {
         return allUsersList;
     }
 
-    /*TODO Admin And owning user*/
     public ResponseEntity<Object> getUserByID(Long userId) {
         UserOutputDto user = toDto(userRepository.getReferenceById(userId));
         return ResponseEntity.ok(user);
     }
 
-    /*TODO Admin And owning user*/
     public ResponseEntity deleteUserByID(Long id) {
         if (!checkOwningUser(id)) {
             return ResponseEntity.badRequest().body("User is not authorized");
@@ -97,7 +96,6 @@ public class UserService {
         }
     }
 
-    /*TODO Admin And owning user*/
     public ResponseEntity<Object> updateUserNameByID(@Validated Long id, UserInputDto updatedUser, BindingResult bindingResult) {
         Optional<User> ifExist = userRepository.findById(id);
         if (!checkOwningUser(id)) {

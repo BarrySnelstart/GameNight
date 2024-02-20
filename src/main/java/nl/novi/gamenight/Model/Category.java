@@ -4,5 +4,8 @@ public enum Category {
     BORD,
     CARD,
     DICE,
+    COMPUTER,
     OTHER
+
+
 }

@@ -38,8 +38,6 @@ public class ManualService {
 
     public byte[] manualDownload (Long ID) throws IOException {
         Optional<Manual> download = manualRepository.findById(ID);
-        //Optional<Game> game = Optional.of(gameRepository.getReferenceById(gameID));
-
         Manual data = download.get();
         return CompressUtil.decompress(data.getData());
 

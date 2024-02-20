@@ -18,10 +18,10 @@ public class GameInputDto {
         this.averageDuration = averageDuration;
         this.category = category;
         this.type = type;
-        /*TODO should this be here*/
-       // this.averageStarValue = averageStarValue;
     }
+    public GameInputDto() {
 
+    }
     @NotBlank(message = "Game name cannot be empty or null")
     public String name;
     @NotBlank(message = "Manufacturer cannot be empty or null")
@@ -43,11 +43,6 @@ public class GameInputDto {
     @NotBlank(message = "Type cannot be empty or null")
     public String type;
 
-    public GameInputDto() {
-
-    }
-
-//    public int averageStarValue;
 
 
 }
