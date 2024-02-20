@@ -1,8 +1,6 @@
 package nl.novi.gamenight.Controller;
 
-import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Model.Manual;
-import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.Repository.ManualRepository;
 import nl.novi.gamenight.Services.ManualService;
 import org.springframework.http.MediaType;

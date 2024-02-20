@@ -17,7 +17,6 @@ public class GameOutputDto {
         this.averageStarValue = averageStarValue;
     }
 public GameOutputDto() {}
-    /*TODO Can we extend this?*/
     public Long gameID;
     public String name;
     public String manufacturer;
