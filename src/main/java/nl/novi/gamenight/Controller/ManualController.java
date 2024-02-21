@@ -1,5 +1,7 @@
 package nl.novi.gamenight.Controller;
 
+import nl.novi.gamenight.Dto.game.GameOutputDto;
+import nl.novi.gamenight.Dto.manual.ManualOutputDto;
 import nl.novi.gamenight.Model.Manual;
 import nl.novi.gamenight.Repository.ManualRepository;
 import nl.novi.gamenight.Services.ManualService;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +24,10 @@ public class ManualController {
         this.manualService = manualUpDownloadService;
         this.manualRepository = manualUpDownloadRepository;
     }
-    /*TODO Create a list*/
+    @GetMapping("/manuals")
+    public List<ManualOutputDto> getAllManuals() {
+        return manualService.getAllManuals();
+    }
 
     @PostMapping("/{gameID}")
     public ResponseEntity<String> upLoadManual(@RequestParam("file") MultipartFile multipartFile, @PathVariable("gameID") Long gameID) throws IOException {
@@ -36,5 +42,4 @@ public class ManualController {
         MediaType mediaType = MediaType.valueOf(dbData.get().getType());
         return ResponseEntity.ok().contentType(mediaType).body(download);
     }
-
 }
