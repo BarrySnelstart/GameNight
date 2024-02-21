@@ -1,5 +1,7 @@
 package nl.novi.gamenight.Services;
 
+import nl.novi.gamenight.Dto.game.GameOutputDto;
+import nl.novi.gamenight.Dto.manual.ManualOutputDto;
 import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Model.Manual;
 import nl.novi.gamenight.Repository.GameRepository;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,7 +40,7 @@ public class ManualService {
         return saveData.getName();
     }
 
-    public byte[] manualDownload (Long ID) throws IOException {
+    public byte[] manualDownload(Long ID) throws IOException {
         Optional<Manual> download = manualRepository.findById(ID);
         Manual data = download.get();
         return CompressUtil.decompress(data.getData());
@@ -44,4 +48,14 @@ public class ManualService {
 
     }
 
+    public List<ManualOutputDto> getAllManuals() {
+        List<ManualOutputDto> manualList = new ArrayList<>();
+        for (Manual manuals : manualRepository.findAll()) {
+            ManualOutputDto addToList = new ManualOutputDto();
+            addToList.gameName = manuals.getGame().getName();
+            addToList.manualID = manuals.getManualID();
+            manualList.add(addToList);
+        }
+        return manualList;
+    }
 }

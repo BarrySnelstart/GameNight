@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Dto.Game;
+package nl.novi.gamenight.Dto.game;
 
 import nl.novi.gamenight.Model.Category;
 

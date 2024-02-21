@@ -1,7 +1,7 @@
 package nl.novi.gamenight.Services;
 
-import nl.novi.gamenight.Dto.Game.GameInputDto;
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Model.Category;
 
 

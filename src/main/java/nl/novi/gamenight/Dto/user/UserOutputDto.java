@@ -1,4 +1,4 @@
-package nl.novi.gamenight.Dto.User;
+package nl.novi.gamenight.Dto.user;
 
 
 public class UserOutputDto {

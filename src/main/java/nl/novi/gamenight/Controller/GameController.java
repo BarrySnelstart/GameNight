@@ -1,18 +1,14 @@
 package nl.novi.gamenight.Controller;
 
-import nl.novi.gamenight.Dto.Game.GameInputDto;
-import nl.novi.gamenight.Dto.Game.GameOutputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Services.GameService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("game")
@@ -43,7 +39,6 @@ public class GameController {
         return gameService.addGame(gameInputDto, bindingResult);
     }
 
-    /*TODO for now admin only, but owning user should be able to update his own game*/
     @PutMapping("/update/{gameID}")
     public ResponseEntity<Object> updateGameByID(@PathVariable("gameID") Long gameID, @Validated @RequestBody GameInputDto updatedGame, BindingResult bindingResult) {
         return gameService.updateGameByID(gameID, updatedGame, bindingResult);

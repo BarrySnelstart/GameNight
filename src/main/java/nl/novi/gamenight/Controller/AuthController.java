@@ -1,6 +1,6 @@
 package nl.novi.gamenight.Controller;
 
-import nl.novi.gamenight.Dto.Auth.AuthDto;
+import nl.novi.gamenight.Dto.auth.AuthDto;
 import nl.novi.gamenight.Model.Logging;
 import nl.novi.gamenight.Repository.LoggingRepository;
 import nl.novi.gamenight.security.JwtService;

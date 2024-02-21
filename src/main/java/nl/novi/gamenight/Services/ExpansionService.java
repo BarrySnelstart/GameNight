@@ -2,7 +2,7 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionInPutDto;
 import nl.novi.gamenight.Dto.expansionDto.GameExpansionOutputDto;
-import nl.novi.gamenight.Dto.Game.GameInputDto;
+import nl.novi.gamenight.Dto.game.GameInputDto;
 import nl.novi.gamenight.Model.Expansion;
 import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.ExpansionRepository;
@@ -47,8 +47,6 @@ public class ExpansionService {
             Game expansionDetails = ToGameEntity(gameInput);
 
             gameRepository.save(expansionDetails);
-
-            /*TODO should return BasegameID See outputDto*/
             return ResponseEntity.created(null).body(expansionDetails);
         }
     }

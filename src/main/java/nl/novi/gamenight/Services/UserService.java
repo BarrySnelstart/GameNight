@@ -1,8 +1,8 @@
 package nl.novi.gamenight.Services;
 
 
-import nl.novi.gamenight.Dto.User.UserInputDto;
-import nl.novi.gamenight.Dto.User.UserOutputDto;
+import nl.novi.gamenight.Dto.user.UserInputDto;
+import nl.novi.gamenight.Dto.user.UserOutputDto;
 import nl.novi.gamenight.Model.Role;
 import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.RoleRepository;
