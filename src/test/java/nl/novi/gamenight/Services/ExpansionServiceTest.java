@@ -106,7 +106,6 @@ class ExpansionServiceTest {
         // ACT
         when(expansionRepository.findById(expansionID)).thenReturn(Optional.empty());
         ResponseEntity responseEntity = expansionService.deleteAGameExpansionByID(expansionID);
-        //verify(expansionRepository, never()).deleteById(anyLong());
 
         //Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -171,5 +170,17 @@ class ExpansionServiceTest {
         assertEquals(gameInput.averageDuration, game.getAverageDuration());
         assertEquals(gameInput.category, game.getCategory());
         assertEquals(gameInput.type, game.getType());
+    }
+
+    @Test
+    public void testUpdateGameExpansion_IdNotFound() {
+        Long expansionID = 1L;
+        GameExpansionInPutDto gameExpansionInPutDto = new GameExpansionInPutDto();
+        when(expansionRepository.findById(expansionID)).thenReturn(Optional.empty());
+
+        ResponseEntity<Object> response = expansionService.updateGameExpansion(expansionID, gameExpansionInPutDto);
+
+        assert response.getStatusCode() == HttpStatus.BAD_REQUEST;
+        assert response.getBody().equals("ID not found in database");
     }
 }
