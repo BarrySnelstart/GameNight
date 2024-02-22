@@ -22,7 +22,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.*;
 
 @Service
@@ -64,8 +66,11 @@ public class UserService {
         if (rol.isEmpty()) {
             return ResponseEntity.badRequest().body("No UserRoles found");
         }
-
-        return ResponseEntity.created(null).body(toDto(newUser));
+        URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("")
+                .buildAndExpand(newUser)
+                .toUri();
+        return ResponseEntity.created(location).body(toDto(newUser));
     }
 
     public List<UserOutputDto> getAllUsers() {

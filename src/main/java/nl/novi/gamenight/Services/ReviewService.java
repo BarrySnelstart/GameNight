@@ -15,8 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import java.net.URI;
 import java.util.*;
 
 @Service
@@ -57,7 +59,11 @@ public class ReviewService {
             ReviewOutputDto reviewOutputDto = toDto(review);
             reviewOutputDto.gameID = reviewInputDto.gameID;
             reviewOutputDto.userID = user.getUserID();
-            return ResponseEntity.created(null).body(reviewOutputDto);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                    .path("")
+                    .buildAndExpand(review)
+                    .toUri();
+            return ResponseEntity.created(location).body(reviewOutputDto);
         }
     }
 
