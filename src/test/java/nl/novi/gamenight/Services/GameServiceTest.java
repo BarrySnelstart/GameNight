@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 import java.util.*;
 
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.when;
 class GameServiceTest {
     private GameInputDto game1;
     private GameInputDto game2;
-
+private GameInputDto updatedGame;
     @Mock
     GameService gameService;
 
@@ -37,7 +38,7 @@ class GameServiceTest {
     public void setUp() {
         game1 = new GameInputDto("De Kolonisten van Catan: Het grote Kanaal", "999 games", 12, 2, 5, 30, 90, Category.BORD, "Gezeldschap Spel");
         game2 = new GameInputDto("Fiets hem er in", "TROS", 1, 99, 16, 30, 90, Category.OTHER, "Buiten spel");
-
+        updatedGame = new GameInputDto("Fiets hem er in", "TROS", 1, 99, 16, 30, 90, Category.OTHER, "Buiten spel");
         gameRepository = mock(GameRepository.class);
         gameService = new GameService(gameRepository);
 
@@ -192,7 +193,9 @@ class GameServiceTest {
 
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
-
+        List<FieldError> errors = new ArrayList<>();
+        errors.add(new FieldError("object", "field", "error message"));
+        when(bindingResult.getFieldErrors()).thenReturn((List<FieldError>) errors);
         Game gameToUpdate = new Game();
         when(gameRepository.findById(gameId)).thenReturn(Optional.of(gameToUpdate));
 
@@ -205,7 +208,36 @@ class GameServiceTest {
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
+    @Test
+    void updateGameByIDSucceeds() {
+        // Arrange
+        Long gameId = 1L;
 
+        BindingResult bindingResult = mock(BindingResult.class);
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        Game gameToUpdate = new Game();
+
+        gameToUpdate.setGameID(1L);
+        gameToUpdate.setName(updatedGame.name);
+        gameToUpdate.setManufacturer(updatedGame.manufacturer);
+        gameToUpdate.setMinimumPlayers(updatedGame.minimumPlayers);
+        gameToUpdate.setMaximumPlayers(updatedGame.maximumPlayers);
+        gameToUpdate.setAge(updatedGame.age);
+        gameToUpdate.setMinimumDuration(updatedGame.minimumDuration);
+        gameToUpdate.setAverageDuration(updatedGame.averageDuration);
+        gameToUpdate.setCategory(updatedGame.category);
+        gameToUpdate.setType(updatedGame.type);
+        when(gameRepository.save(gameToUpdate)).thenReturn(gameToUpdate);
+        when(gameRepository.findById(gameId)).thenReturn(Optional.of(gameToUpdate));
+        when(gameRepository.getReferenceById(gameId)).thenReturn(gameToUpdate);
+
+        // Act
+        ResponseEntity responseEntity = gameService.updateGameByID(gameId, game1, bindingResult);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    }
     @Test
     void testUpdateGameByID_GameNotExists() {
         // Arrange

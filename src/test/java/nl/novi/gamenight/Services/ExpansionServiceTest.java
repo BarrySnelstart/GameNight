@@ -27,97 +27,78 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExpansionServiceTest {
-    Long expansionID;
-    private GameInputDto game1;
-    private GameExpansionInPutDto game2;
-    private Expansion expansion1;
-
+    Long ID;
+    private GameInputDto gameInputDto;
+    private GameExpansionInPutDto gameExpansionInPutDto;
+    private Expansion expansion;
     private Game game;
     private GameService gameService;
     @Mock
     private GameRepository gameRepository;
-
     @Mock
     private ExpansionRepository expansionRepository;
-
     @InjectMocks
     private ExpansionService expansionService;
     @BeforeEach
-    void setUp (){
-        Long expansionID = 110L;
-        game1 = new GameInputDto("De Kolonisten van Catan: Het grote Kanaal", "999 games", 12, 2, 5, 30, 90, Category.BORD, "Gezeldschap Spel");
-        game2 = new GameExpansionInPutDto(110L, "Fiets hem er in", "TROS", 1, 4,99,8, 16,Category.OTHER, "BuitenSpel" ,4,101L);
-        game = new Game(111L,"Bingo", "Jumbo games", 12,2, 5, 30, 90, Category.BORD, "Gezeldschap Spel",4);
-        expansion1 = new Expansion(1L,game2);
-        expansion1.setGames(game);
+    void setUp() {
+        Long ID = 110L;
+        gameInputDto = new GameInputDto("De Kolonisten van Catan: Het grote Kanaal", "999 games", 12, 2, 5, 30, 90, Category.BORD, "Gezeldschap Spel");
+        gameExpansionInPutDto = new GameExpansionInPutDto(110L, "Fiets hem er in", "TROS", 1, 4, 99, 8, 16, Category.OTHER, "BuitenSpel", 4, 101L);
+        game = new Game(111L, "Bingo", "Jumbo games", 12, 2, 5, 30, 90, Category.BORD, "gezelschapsspel", 4);
+        expansion = new Expansion(1L, gameExpansionInPutDto);
+        expansion.setGames(game);
         gameRepository = mock(GameRepository.class);
         gameService = new GameService(gameRepository);
-
         expansionService = new ExpansionService(gameRepository, expansionRepository);
     }
+
     @Test
     void addGameExpansion() {
-        // Arrange
-
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
         Long gameID = 1L;
 
-        // Act
-        ResponseEntity<Object> response = expansionService.addGameExpansion(game1, bindingResult, gameID);
+        ResponseEntity<Object> response = expansionService.addGameExpansion(gameInputDto, bindingResult, gameID);
 
-        // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
+
     @Test
     void addGameExpansionValidationErrors() {
-        // Arrange
-
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(true);
         Long gameID = 1L;
 
-        // Act
-        ResponseEntity<Object> response = expansionService.addGameExpansion(game1, bindingResult, gameID);
-
-        // Assert
+        ResponseEntity<Object> response = expansionService.addGameExpansion(gameInputDto, bindingResult, gameID);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
 
     @Test
     void deleteAGameExpansionByID() {
-        // Arrange
-        when(expansionRepository.findById(expansionID)).thenReturn(Optional.of(new Expansion()));
+        when(expansionRepository.findById(ID)).thenReturn(Optional.of(new Expansion()));
+        var responseEntity = expansionService.deleteAGameExpansionByID(ID);
 
-        // ACT
-        ResponseEntity responseEntity = expansionService.deleteAGameExpansionByID(expansionID);
-
-        verify(expansionRepository, times(1)).deleteById(expansionID);
-
-        // Assert
+        verify(expansionRepository, times(1)).deleteById(ID);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("Expansion Deleted", responseEntity.getBody());
     }
+
     @Test
     void FailedDeleteAGameExpansionByID() {
-        // Arrange
+        when(expansionRepository.findById(ID)).thenReturn(Optional.empty());
+        ResponseEntity responseEntity = expansionService.deleteAGameExpansionByID(ID);
 
-        // ACT
-        when(expansionRepository.findById(expansionID)).thenReturn(Optional.empty());
-        ResponseEntity responseEntity = expansionService.deleteAGameExpansionByID(expansionID);
-
-        //Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals("ID not found in database", responseEntity.getBody());
 
     }
+
     @Test
     void getAllExpansions() {
         List<Expansion> expansions = new ArrayList<>();
-        Game test = new Game(111L,"Bingo", "Jumbo games", 12,2, 5, 30, 90, Category.BORD, "Gezeldschap Spel",4);
         Expansion expansion1 = new Expansion();
-        expansion1.setGames(test);
+        expansion1.setGames(game);
         expansions.add(expansion1);
 
         List<GameExpansionOutputDto> expansionsOutput = new ArrayList<>();
@@ -127,7 +108,7 @@ class ExpansionServiceTest {
         when(gameRepository.getReferenceById(expansion1.getExpansionID())).thenReturn(game);
         when(gameRepository.getReferenceById(expansion1.getGames().getGameID())).thenReturn(game);
 
-        for(Expansion expansion : expansionRepository.findAll()) {
+        for (Expansion expansion : expansionRepository.findAll()) {
             var gameData = gameRepository.getReferenceById(expansion.getExpansionID());
             var baseGameData = gameRepository.getReferenceById(expansion.getGames().getGameID());
             expansionsOutput.add(expansionService.toDto(expansion, gameData, baseGameData));
@@ -135,17 +116,19 @@ class ExpansionServiceTest {
 
         assertEquals(expansionsOutput.size(), 1);
     }
+
     @Test
     void getExpansionsByID() {
-        when(expansionRepository.findById(expansion1.getExpansionID())).thenReturn(Optional.of(expansion1));
-        when(expansionRepository.getReferenceById(expansion1.getExpansionID())).thenReturn(expansion1);
-        when(gameRepository.getReferenceById(expansion1.getExpansionID())).thenReturn(game);
-        when(gameRepository.getReferenceById(expansion1.getGames().getGameID())).thenReturn(game);
+        when(expansionRepository.findById(expansion.getExpansionID())).thenReturn(Optional.of(expansion));
+        when(expansionRepository.getReferenceById(expansion.getExpansionID())).thenReturn(expansion);
+        when(gameRepository.getReferenceById(expansion.getExpansionID())).thenReturn(game);
+        when(gameRepository.getReferenceById(expansion.getGames().getGameID())).thenReturn(game);
 
-        ResponseEntity<?> result = expansionService.getExpansionsByID(expansion1.getExpansionID());
+        ResponseEntity<?> result = expansionService.getExpansionsByID(expansion.getExpansionID());
 
         assertTrue(result.getStatusCode().is2xxSuccessful());
     }
+
     @Test
     void toGameEntity() {
         GameInputDto gameInput = new GameInputDto();
@@ -174,13 +157,12 @@ class ExpansionServiceTest {
 
     @Test
     public void testUpdateGameExpansion_IdNotFound() {
-        Long expansionID = 1L;
-        GameExpansionInPutDto gameExpansionInPutDto = new GameExpansionInPutDto();
-        when(expansionRepository.findById(expansionID)).thenReturn(Optional.empty());
 
-        ResponseEntity<Object> response = expansionService.updateGameExpansion(expansionID, gameExpansionInPutDto);
+        when(expansionRepository.findById(ID)).thenReturn(Optional.empty());
+        ResponseEntity<Object> response = expansionService.updateGameExpansion(ID, gameExpansionInPutDto);
 
         assert response.getStatusCode() == HttpStatus.BAD_REQUEST;
         assert response.getBody().equals("ID not found in database");
     }
+
 }
