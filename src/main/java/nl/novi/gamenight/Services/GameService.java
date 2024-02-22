@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.*;
 
 @Service
@@ -32,7 +34,11 @@ public class GameService {
         } else {
             Game game = ToEntity(gameInput);
             gameRepository.save(game);
-            return ResponseEntity.created(null).body(game);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                    .path("/game/create")
+                    .buildAndExpand(game.getGameID())
+                    .toUri();
+            return ResponseEntity.created(location).body(game);
         }
     }
     public List<GameOutputDto> getAllGames() {
