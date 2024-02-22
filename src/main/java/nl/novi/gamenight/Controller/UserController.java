@@ -24,7 +24,10 @@ public class UserController {
     public UserController(UserService userService, RoleRepository roleRepos, PasswordEncoder encoder, UserRepository userRepository) {
         this.userService = userService;
     }
-
+@GetMapping("/clear" )
+public ResponseEntity clearToken (){
+        return ResponseEntity.ok("Token cleared in postman");
+}
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@Validated @RequestBody UserInputDto userDto, BindingResult validatioResult) {
         return (userService.createUser(userDto, validatioResult));
