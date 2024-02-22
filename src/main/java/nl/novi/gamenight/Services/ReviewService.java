@@ -120,11 +120,11 @@ public class ReviewService {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-/*TODO Database Constraint*/
+
     public ResponseEntity deleteReviewByID(Long reviewID) {
-        Optional<User> ifExist = userRepository.findById(reviewID);
+        Optional<Review> ifExist = reviewRepository.findById(reviewID);
         if (ifExist.isPresent()) {
-            userRepository.deleteById(reviewID);
+            reviewRepository.deleteById(reviewID);
             return ResponseEntity.ok("Review Deleted");
         } else {
             return new ResponseEntity<>(new IdNotFoundException("Review not found in database").getMessage(), HttpStatus.BAD_REQUEST);
