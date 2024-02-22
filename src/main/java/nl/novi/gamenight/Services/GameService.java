@@ -111,7 +111,11 @@ public class GameService {
                 gameToUpdate.setCategory(updatedGame.category);
                 gameToUpdate.setType(updatedGame.type);
                 gameRepository.save(gameToUpdate);
-                return ResponseEntity.created(null).body(updatedGame);
+                URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                        .path("")
+                        .buildAndExpand(gameToUpdate)
+                        .toUri();
+                return ResponseEntity.created(location).body(updatedGame);
             }
         } else {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
