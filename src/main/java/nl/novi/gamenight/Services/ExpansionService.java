@@ -49,7 +49,7 @@ public class ExpansionService {
 
             Game expansionDetails = ToGameEntity(gameInput);
             URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
-                    .path("create/{baseGameID}")
+                    .path("")
                     .buildAndExpand(expansionDetails.getGameID())
                     .toUri();
             gameRepository.save(expansionDetails);
