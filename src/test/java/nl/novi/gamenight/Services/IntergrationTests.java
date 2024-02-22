@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
@@ -26,7 +29,7 @@ public class IntergrationTests {
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/game/games"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
     }
 
@@ -45,6 +48,20 @@ public class IntergrationTests {
                      "type":"Computer Game"
                 }
                             """;
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/game/create").contentType(APPLICATION_JSON).content(requestJson)).andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isCreated());
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/game/create").contentType(APPLICATION_JSON).content(requestJson)).andDo(MockMvcResultHandlers.print()).andExpect(status().isCreated());
     }
+    @Test
+    void getAllGames_Success() throws Exception {
+        // Arrange
+
+        // Act
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .get("/game/games")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // Assert
+        resultActions.andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(12));
+    }
+
 }
