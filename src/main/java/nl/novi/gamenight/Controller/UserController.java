@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{userID}")
-    public ResponseEntity<Object>  updateUserNameByID(@Validated @PathVariable("id") Long ID,@RequestBody UserInputDto updatedUser, BindingResult bindingResult)
+    public ResponseEntity<Object>  updateUserNameByID(@Validated @PathVariable("userID") Long ID,@RequestBody UserInputDto updatedUser, BindingResult bindingResult)
     {
         return userService.updateUserNameByID(ID, updatedUser, bindingResult);
     }
