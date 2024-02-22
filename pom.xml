@@ -9,7 +9,7 @@
     </parent>
     <groupId>nl.novi</groupId>
     <artifactId>GameNight</artifactId>
-    <version>0.8.1-BasicCRUD</version>
+    <version>0.9.1-Pre-alpha</version>
     <name>GameNight</name>
     <description>GameNight</description>
     <properties>
