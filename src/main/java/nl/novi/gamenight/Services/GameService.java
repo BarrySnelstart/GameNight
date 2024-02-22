@@ -35,7 +35,7 @@ public class GameService {
             Game game = ToEntity(gameInput);
             gameRepository.save(game);
             URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
-                    .path("/game/create")
+                    .path("")
                     .buildAndExpand(game.getGameID())
                     .toUri();
             return ResponseEntity.created(location).body(game);
