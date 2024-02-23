@@ -20,14 +20,15 @@ import java.util.List;
 public class UserController {
     UserService userService;
 
-
-    public UserController(UserService userService, RoleRepository roleRepos, PasswordEncoder encoder, UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
-@GetMapping("/clear" )
-public ResponseEntity clearToken (){
+
+    @GetMapping("/clear")
+    public ResponseEntity clearToken() {
         return ResponseEntity.ok("Token cleared in postman");
-}
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@Validated @RequestBody UserInputDto userDto, BindingResult validatioResult) {
         return (userService.createUser(userDto, validatioResult));
@@ -51,8 +52,7 @@ public ResponseEntity clearToken (){
     }
 
     @PutMapping("/update/{userID}")
-    public ResponseEntity<Object>  updateUserNameByID(@Validated @PathVariable("userID") Long ID,@RequestBody UserInputDto updatedUser, BindingResult bindingResult)
-    {
+    public ResponseEntity<Object> updateUserNameByID(@Validated @PathVariable("userID") Long ID, @RequestBody UserInputDto updatedUser, BindingResult bindingResult) {
         return userService.updateUserNameByID(ID, updatedUser, bindingResult);
     }
 
