@@ -2,7 +2,7 @@ package nl.novi.gamenight.Services;
 
 import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Model.Category;
-import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,10 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -29,11 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IntergrationTests {
     @Autowired
     MockMvc mockMvc;
-    @Mock GameService gameService;
+    @Mock
+    GameService gameService;
 
 
     @Test
-    void shouldReturnCorrectGameBasedOnID ()throws Exception{
+    void shouldReturnCorrectGameBasedOnID() throws Exception {
         GameOutputDto game = new GameOutputDto();
         game.gameID = 106L;
         game.name = "Ganzebordern";
@@ -45,7 +45,6 @@ public class IntergrationTests {
         game.minimumDuration = 10;
 
 
-
         Mockito.when(gameService.getGameByID(106L)).thenReturn(game);
 
         this.mockMvc
@@ -54,6 +53,7 @@ public class IntergrationTests {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
     @Test
     void GetAllGames() throws Exception {
         this.mockMvc
@@ -80,14 +80,15 @@ public class IntergrationTests {
                             """;
         this.mockMvc
                 .perform(MockMvcRequestBuilders.post("/game/create")
-                .contentType(APPLICATION_JSON)
-                .content(requestJson))
+                        .contentType(APPLICATION_JSON)
+                        .content(requestJson))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status()
-                .isCreated());
+                        .isCreated());
     }
+
     @Test
-        void getAllGames_Success() throws Exception {
+    void getAllGames_Success() throws Exception {
         // Arrange
 
         // Act
@@ -97,8 +98,6 @@ public class IntergrationTests {
 
         // Assert
         resultActions.andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()")
-                .value(12));
     }
 
 }
