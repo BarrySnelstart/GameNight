@@ -1,6 +1,5 @@
 package nl.novi.gamenight.Services;
 
-import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Dto.manual.ManualOutputDto;
 import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Model.Manual;

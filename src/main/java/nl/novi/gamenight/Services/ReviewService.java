@@ -3,7 +3,6 @@ package nl.novi.gamenight.Services;
 import nl.novi.gamenight.Dto.reviewDto.ReviewInputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewOutputDto;
 import nl.novi.gamenight.Model.Review;
-import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.Repository.ReviewRepository;
 import nl.novi.gamenight.Repository.UserRepository;
@@ -15,8 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import java.net.URI;
 import java.util.*;
 
 @Service
@@ -57,7 +58,11 @@ public class ReviewService {
             ReviewOutputDto reviewOutputDto = toDto(review);
             reviewOutputDto.gameID = reviewInputDto.gameID;
             reviewOutputDto.userID = user.getUserID();
-            return ResponseEntity.created(null).body(reviewOutputDto);
+            URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                    .path("")
+                    .buildAndExpand(review)
+                    .toUri();
+            return ResponseEntity.created(location).body(reviewOutputDto);
         }
     }
 
@@ -122,9 +127,9 @@ public class ReviewService {
     }
 
     public ResponseEntity deleteReviewByID(Long reviewID) {
-        Optional<User> ifExist = userRepository.findById(reviewID);
+        Optional<Review> ifExist = reviewRepository.findById(reviewID);
         if (ifExist.isPresent()) {
-            userRepository.deleteById(reviewID);
+            reviewRepository.deleteById(reviewID);
             return ResponseEntity.ok("Review Deleted");
         } else {
             return new ResponseEntity<>(new IdNotFoundException("Review not found in database").getMessage(), HttpStatus.BAD_REQUEST);

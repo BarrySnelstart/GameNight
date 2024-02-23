@@ -11,8 +11,4 @@ public class GameExpansionInPutDto extends Game {
         this.baseGameID = baseGameID;
     }
 
-    public GameExpansionInPutDto(Long baseGameID) {
-        this.baseGameID = baseGameID;
-    }
-public GameExpansionInPutDto (){}
 }

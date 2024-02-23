@@ -61,10 +61,11 @@ public class SecurityConfig {
 
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
+                .requestMatchers(HttpMethod.GET, "/user/clear").permitAll()
                 .requestMatchers(HttpMethod.POST, "/user/create").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/user/delete/{userID}/**").hasAnyAuthority("ADMIN", "USER")
                 .requestMatchers(HttpMethod.PUT, "/user/update/{userID}/**").hasAnyAuthority("ADMIN", "USER")
-                .requestMatchers(HttpMethod.GET, "/user/{userID}/**").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/user/{userID}/**").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user/users/**").hasAnyAuthority("ADMIN")
 
                 .requestMatchers(HttpMethod.POST, "/review/create").permitAll()

@@ -16,7 +16,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
+import java.net.URI;
 import java.util.*;
 
 @Service
@@ -45,9 +48,12 @@ public class ExpansionService {
             expansionRepository.save(expansion);
 
             Game expansionDetails = ToGameEntity(gameInput);
-
+            URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                    .path("")
+                    .buildAndExpand(expansionDetails.getGameID())
+                    .toUri();
             gameRepository.save(expansionDetails);
-            return ResponseEntity.created(null).body(expansionDetails);
+            return ResponseEntity.created(location).body(expansionDetails);
         }
     }
 
@@ -76,7 +82,10 @@ public class ExpansionService {
             var expansionData = expansionRepository.getReferenceById(expansionID);
             var gameData = gameRepository.getReferenceById(expansionData.getExpansionID());
             var baseGameData = gameRepository.getReferenceById(expansionData.getGames().getGameID());
+
             return ResponseEntity.ok().body(toDto(expansionData, gameData, baseGameData));
+
+
         } else {
             return new ResponseEntity<>(new IdNotFoundException("ID not found in database").getMessage(), HttpStatus.BAD_REQUEST);
         }

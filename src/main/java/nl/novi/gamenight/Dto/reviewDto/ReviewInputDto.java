@@ -7,12 +7,6 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public class ReviewInputDto {
-    public ReviewInputDto(String userReview, int starRating, Long gameID) {
-        this.userReview = userReview;
-        this.starRating = starRating;
-        this.gameID = gameID;
-    }
-    public ReviewInputDto() {}
 
     @NotBlank
     public String userReview;
