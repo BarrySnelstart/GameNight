@@ -22,18 +22,4 @@ public class Manual {
     @OneToOne
     @JoinColumn(name = "gameid", referencedColumnName = "gameid")
     private Game game;
-
-
-
-
-    public Manual(String name, String type, byte[] data, Game game) {
-
-        this.name = name;
-        this.type = type;
-        this.data = data;
-        this.game = game;
-    }
-
-    public Manual() {
-    }
 }

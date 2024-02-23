@@ -3,7 +3,6 @@ package nl.novi.gamenight.Services;
 import nl.novi.gamenight.Dto.reviewDto.ReviewInputDto;
 import nl.novi.gamenight.Dto.reviewDto.ReviewOutputDto;
 import nl.novi.gamenight.Model.Review;
-import nl.novi.gamenight.Model.User;
 import nl.novi.gamenight.Repository.GameRepository;
 import nl.novi.gamenight.Repository.ReviewRepository;
 import nl.novi.gamenight.Repository.UserRepository;

@@ -1,6 +1,5 @@
 package nl.novi.gamenight.Controller;
 
-import nl.novi.gamenight.Dto.game.GameOutputDto;
 import nl.novi.gamenight.Dto.manual.ManualOutputDto;
 import nl.novi.gamenight.Model.Manual;
 import nl.novi.gamenight.Repository.ManualRepository;
@@ -24,6 +23,7 @@ public class ManualController {
         this.manualService = manualUpDownloadService;
         this.manualRepository = manualUpDownloadRepository;
     }
+
     @GetMapping("/manuals")
     public List<ManualOutputDto> getAllManuals() {
         return manualService.getAllManuals();
