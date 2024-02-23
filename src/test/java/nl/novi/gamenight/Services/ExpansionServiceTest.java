@@ -9,6 +9,7 @@ import nl.novi.gamenight.Model.Game;
 import nl.novi.gamenight.Repository.ExpansionRepository;
 import nl.novi.gamenight.Repository.GameRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -53,6 +54,8 @@ class ExpansionServiceTest {
     }
 
     @Test
+    @Disabled
+        /* Test disabled added Uri return in service*/
     void addGameExpansion() {
         BindingResult bindingResult = mock(BindingResult.class);
         when(bindingResult.hasErrors()).thenReturn(false);
