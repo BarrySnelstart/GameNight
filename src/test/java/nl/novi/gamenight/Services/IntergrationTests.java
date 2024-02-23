@@ -97,7 +97,7 @@ public class IntergrationTests {
                 .contentType(MediaType.APPLICATION_JSON));
 
         // Assert
-        resultActions.andExpect(status().isOk())
+        resultActions.andExpect(status().isOk());
     }
 
 }
